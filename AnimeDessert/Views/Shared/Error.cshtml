@@ -1,0 +1,28 @@
+﻿@model AnimeDessert.Models.ViewModels.ErrorViewModel
+
+@{
+    ViewData["Title"] = "Error";
+}
+
+<div class="d-flex justify-content-between align-items-center">
+    <h1 class="text-danger">@ViewData["Title"]</h1>
+    <a class="text-decoration-none" href="javascript:history.back()">
+        <h2>
+            Back
+        </h2>
+    </a>
+</div>
+
+<hr />
+
+<h2 class="text-danger">An error occurred while processing your request</h2>
+
+@if (Model.Errors != null && Model.Errors.Count() > 0)
+{
+    <ul>
+        @foreach (string Error in Model.Errors)
+        {
+            <li>@Error</li>
+        }
+    </ul>
+}
