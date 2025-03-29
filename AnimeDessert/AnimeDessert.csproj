@@ -8,6 +8,8 @@
   </PropertyGroup>
   
   <ItemGroup>
+    <Folder Include="Views\InstructionPage\" />
+    <Folder Include="Views\ReviewPage\" />
     <Folder Include="wwwroot\assets\images\" />
     <Folder Include="wwwroot\assets\musics\" />
   </ItemGroup>

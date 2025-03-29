@@ -33,4 +33,13 @@ namespace AnimeDessert.Models
         // A Dessert can have many Images
         public ICollection<Image>? Images { get; set; }
     }
+
+    public class DessertDto
+    {
+        public int DessertId { get; set; }
+        public string DessertName { get; set; }
+        public string DessertDescription { get; set; }
+        public string SpecificTag { get; set; }
+
+    }
 }

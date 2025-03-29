@@ -1,0 +1,22 @@
+﻿@model AnimeDessert.Models.DessertDto
+
+@{
+    ViewData["Title"] = "ConfirmDelete";
+}
+
+<h1 style="text-align: center; color: #f44336;">Confirm Delete</h1>
+
+<p style="text-align: center; font-size: 18px;">Are you sure you want to delete <strong>@Model.DessertName</strong>?</p>
+
+<div style="text-align: center; margin-top: 20px;">
+    <form asp-action="Delete" asp-route-id="@Model.DessertId" style="display: inline;">
+        <input type="hidden" asp-for="DessertId" />
+        <input type="submit" value="Delete"
+               style="background-color: #f44336; color: white; border: none; padding: 10px 15px; border-radius: 5px; font-size: 16px; cursor: pointer;" />
+    </form>
+
+    <a asp-action="Index"
+       style="background-color: #ddd; color: black; padding: 8px 12px; text-decoration: none; border-radius: 5px; font-size: 14px; margin-left: 10px;">
+        Cancel
+    </a>
+</div>

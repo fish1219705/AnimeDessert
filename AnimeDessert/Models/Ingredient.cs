@@ -17,4 +17,12 @@ namespace AnimeDessert.Models
         // An Ingredient can appear in many Desserts
         public ICollection<Dessert>? Desserts { get; set; }
     }
+
+    public class IngredientDto
+    {
+        public int IngredientId { get; set; }
+        public string IngredientName { get; set; }
+        public string IngredientDescription { get; set; }
+
+    }
 }
