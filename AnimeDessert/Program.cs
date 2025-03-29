@@ -25,6 +25,10 @@ builder.Services.AddScoped<IImageService, ImageService>();
 builder.Services.AddScoped<IMusicService, MusicService>();
 builder.Services.AddScoped<IStaffService, StaffService>();
 builder.Services.AddScoped<IAnimeQuizService, AnimeQuizService>();
+builder.Services.AddScoped<IDessertService, DessertService>();
+builder.Services.AddScoped<IIngredientService, IngredientService>();
+builder.Services.AddScoped<IReviewService, ReviewService>();
+builder.Services.AddScoped<IInstructionService, InstructionService>();
 
 builder.Services.AddControllers().AddJsonOptions(
     options =>

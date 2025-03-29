@@ -1,0 +1,21 @@
+﻿@model AnimeDessert.Models.ReviewDto
+
+<h1 style="text-align: center; color: #f44336;">Confirm Delete?</h1>
+<p style="text-align: center; font-size: 18px; color: #333;">
+    Review @Model.ReviewNumber
+</p>
+
+<div style="text-align: center; margin-top: 20px;">
+    <form method="POST" action="/ReviewPage/Delete/@Model.ReviewId" style="display: inline;">
+        <input type="submit" value="Confirm Delete"
+               style="background-color: #f44336; color: white; border: none; padding: 6px 12px; font-size: 14px; border-radius: 5px; cursor: pointer;" />
+    </form>
+</div>
+
+<div style="text-align: center; margin-top: 20px;">
+    <a href="/ReviewPage/List"
+       style="background-color: #ddd; color: black; padding: 6px 12px; text-decoration: none; border-radius: 5px; font-size: 14px;">
+        Cancel
+    </a>
+</div>
+
