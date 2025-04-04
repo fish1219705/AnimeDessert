@@ -16,9 +16,17 @@ namespace AnimeDessert.Controllers
             _animeQuizService = animeQuizService;
         }
 
-        // GET: AnimeQuiz?numOfQuestions=8
+        // GET: AnimeQuiz
         [HttpGet]
-        public async Task<IActionResult> Index(int numOfQuestions = 8)
+        public async Task<IActionResult> Index()
+        {
+            int totalAvailable = await _animeQuizService.GetTotalAvailable();
+            return View(totalAvailable);
+        }
+
+        // GET: AnimeQuiz/Generate?numOfQuestions=8
+        [HttpGet("Generate")]
+        public async Task<IActionResult> Generate(int numOfQuestions = 8)
         {
             (ServiceResponse response, AnimeQuizDto? animeQuizDto) = await _animeQuizService.GenerateAnimeQuiz(numOfQuestions);
 
