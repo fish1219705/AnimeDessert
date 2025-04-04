@@ -4,7 +4,7 @@
     public enum ServiceStatus { Ok, Created, Updated, Deleted, BadRequest, NotFound, Conflict, UnprocessableEntity, Error }
     public class ServiceResponse
     {
-        
+
         public ServiceStatus Status { get; set; }
 
         public int CreatedId { get; set; }

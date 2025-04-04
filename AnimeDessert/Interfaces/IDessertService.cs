@@ -15,5 +15,11 @@ namespace AnimeDessert.Interfaces
         Task<IEnumerable<DessertDto>> ListDessertsForIngredient(int id);
         Task<ServiceResponse> LinkDessertToIngredient(int dessertId, int ingredientId);
         Task<ServiceResponse> UnlinkDessertFromIngredient(int dessertId, int ingredientId);
+
+        Task<IEnumerable<ImageDto>> ListImagesForDessert(int id);
+
+        Task<ServiceResponse> AddImagesToDessert(int id, AddImagesToDessertRequest request);
+
+        Task<ServiceResponse> RemoveImagesFromDessert(int id, RemoveImagesFromDessertRequest request);
     }
 }

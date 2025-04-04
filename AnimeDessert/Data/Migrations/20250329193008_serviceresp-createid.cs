@@ -5,7 +5,7 @@
 namespace AnimeDessert.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class servicerespcreateid : Migration
+    public partial class ServiceRespCreateId : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

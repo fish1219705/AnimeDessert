@@ -1,9 +1,7 @@
 ﻿using AnimeDessert.Interfaces;
-using AnimeDessert.Services;
-using AnimeDessert.Models.ViewModels;
 using AnimeDessert.Models;
+using AnimeDessert.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AnimeDessert.Controllers
@@ -14,15 +12,16 @@ namespace AnimeDessert.Controllers
         private readonly IIngredientService _ingredientService;
         private readonly IReviewService _reviewService;
         private readonly IInstructionService _instructionService;
+        private readonly ICharacterService _characterService;
 
         // dependency injection of service interfaces
-
-        public DessertPageController(IDessertService DessertService, IIngredientService IngredientService, IReviewService ReviewService, IInstructionService InstructionService)
+        public DessertPageController(IDessertService DessertService, IIngredientService IngredientService, IReviewService ReviewService, IInstructionService InstructionService, ICharacterService CharacterService)
         {
             _dessertService = DessertService;
             _ingredientService = IngredientService;
             _reviewService = ReviewService;
             _instructionService = InstructionService;
+            _characterService = CharacterService;
         }
 
         public IActionResult Index()
@@ -33,7 +32,7 @@ namespace AnimeDessert.Controllers
         // GET: DessertPage/List
         public async Task<IActionResult> List()
         {
-            IEnumerable<DessertDto?> DessertDtos = await _dessertService.ListDesserts();
+            IEnumerable<DessertDto> DessertDtos = await _dessertService.ListDesserts();
             return View(DessertDtos);
         }
 
@@ -49,6 +48,9 @@ namespace AnimeDessert.Controllers
             //need the instructions for this dessert
             IEnumerable<InstructionDto> Instructions = await _instructionService.ListInstructionsForDessert(id);
 
+            //need the images for this dessert
+            IEnumerable<ImageDto> Images = await _dessertService.ListImagesForDessert(id);
+
             if (DessertDto == null)
             {
                 return View("Error", new ErrorViewModel() { Errors = ["Could not find dessert"] });
@@ -62,8 +64,9 @@ namespace AnimeDessert.Controllers
                     DessertIngredients = AssociatedIngredients,
                     AllIngredients = Ingredients,
                     DessertReviews = AssociatedReviews,
-                    DessertInstructions = Instructions
-
+                    DessertInstructions = Instructions,
+                    DessertImages = Images,
+                    DessertCharacter = DessertDto.CharacterId == null ? null : await _characterService.FindCharacter((int)DessertDto.CharacterId)
                 };
                 return View(DessertInfo);
             }
@@ -98,13 +101,21 @@ namespace AnimeDessert.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             DessertDto? DessertDto = await _dessertService.FindDessert(id);
+
             if (DessertDto == null)
             {
                 return View("Error");
             }
             else
             {
-                return View(DessertDto);
+                // information which drives a dessert page
+                DessertDetails DessertInfo = new DessertDetails()
+                {
+                    Dessert = DessertDto,
+                    DessertCharacter = DessertDto.CharacterId == null ? null : await _characterService.FindCharacter((int)DessertDto.CharacterId)
+                };
+
+                return View(DessertInfo);
             }
         }
 
@@ -177,6 +188,43 @@ namespace AnimeDessert.Controllers
             await _ingredientService.UnlinkIngredientFromDessert(ingredientId, dessertId);
 
             return RedirectToAction("Details", new { id = dessertId });
+        }
+
+        // GET: DessertPage/NewImages/{id}
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> NewImages(int id)
+        {
+            DessertDto? dessertDto = await _dessertService.FindDessert(id);
+
+            return dessertDto != null
+                ? View(dessertDto)
+                : View("Error", new ErrorViewModel() { Errors = ["Dessert not found."] });
+        }
+
+        // POST: DessertPage/AddImages/{id}
+        [HttpPost]
+        [Consumes("multipart/form-data")]
+        [Authorize]
+        public async Task<IActionResult> AddImages(int id, [FromForm] AddImagesToDessertRequest request)
+        {
+            ServiceResponse response = await _dessertService.AddImagesToDessert(id, request);
+
+            return response.Status == ServiceStatus.Created
+                ? RedirectToAction("Details", "DessertPage", new { id = id })
+                : PartialView("Error", new ErrorViewModel() { Errors = response.Messages });
+        }
+
+        // POST: DessertPage/RemoveImages/{id}
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> RemoveImages(int id, [FromForm] RemoveImagesFromDessertRequest request)
+        {
+            ServiceResponse response = await _dessertService.RemoveImagesFromDessert(id, request);
+
+            return response.Status == ServiceStatus.Deleted
+                ? RedirectToAction("Details", "DessertPage", new { id = id })
+                : View("Error", new ErrorViewModel() { Errors = response.Messages });
         }
     }
 }

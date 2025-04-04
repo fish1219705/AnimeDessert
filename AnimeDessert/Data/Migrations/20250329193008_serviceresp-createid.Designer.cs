@@ -13,7 +13,7 @@ namespace AnimeDessert.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     [Migration("20250329193008_serviceresp-createid")]
-    partial class servicerespcreateid
+    partial class ServiceRespCreateId
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

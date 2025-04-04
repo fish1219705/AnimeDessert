@@ -1,6 +1,7 @@
 ﻿using AnimeDessert.Interfaces;
 using AnimeDessert.Models;
 using AnimeDessert.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AnimeDessert.Controllers
@@ -37,6 +38,7 @@ namespace AnimeDessert.Controllers
 
         // GET: Staff/New
         [HttpGet("New")]
+        [Authorize]
         public ActionResult New()
         {
             return View();
@@ -44,6 +46,7 @@ namespace AnimeDessert.Controllers
 
         // POST: Staff/Add
         [HttpPost("Add")]
+        [Authorize]
         public async Task<IActionResult> Add([FromForm] AddStaffRequest request)
         {
             (ServiceResponse response, StaffDto? staffDto) = await _staffService.AddStaff(request);
@@ -55,6 +58,7 @@ namespace AnimeDessert.Controllers
 
         // GET: Staff/{id}/Edit
         [HttpGet("{id}/Edit")]
+        [Authorize]
         public async Task<IActionResult> Edit(int id)
         {
             StaffDto? staffDto = await _staffService.FindStaff(id);
@@ -66,6 +70,7 @@ namespace AnimeDessert.Controllers
 
         // POST: Staff/{id}/Update
         [HttpPost("Staff/{id}/Update")]
+        [Authorize]
         public async Task<IActionResult> Update(int id, [FromForm] UpdateStaffRequest request)
         {
             ServiceResponse response = await _staffService.UpdateStaff(id, request);
@@ -77,6 +82,7 @@ namespace AnimeDessert.Controllers
 
         // GET: Staff/{id}/ConfirmDelete
         [HttpGet("Staff/{id}/ConfirmDelete")]
+        [Authorize]
         public async Task<IActionResult> ConfirmDelete(int id)
         {
             StaffDto? staffDto = await _staffService.FindStaff(id);
@@ -88,6 +94,7 @@ namespace AnimeDessert.Controllers
 
         // POST: Staff/{id}/Delete
         [HttpPost("Staff/{id}/Delete")]
+        [Authorize]
         public async Task<IActionResult> Delete(int id)
         {
             ServiceResponse response = await _staffService.DeleteStaff(id);

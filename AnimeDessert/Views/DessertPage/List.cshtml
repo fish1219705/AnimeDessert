@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<AnimeDessert.Models.DessertDto>
+
 @{
     ViewData["Title"] = "Index";
 }
@@ -16,6 +17,9 @@
                 @Html.DisplayNameFor(model => model.DessertName)
             </th>
             <th style="border: 1px solid #ddd; padding: 10px; text-align: left;">
+                @Html.DisplayNameFor(model => model.ImageDtos)
+            </th>
+            <th style="border: 1px solid #ddd; padding: 10px; text-align: left;">
                 @Html.DisplayNameFor(model => model.DessertDescription)
             </th>
             <th style="border: 1px solid #ddd; padding: 10px; text-align: left;">
@@ -30,6 +34,16 @@
             <tr>
                 <td style="border: 1px solid #ddd; padding: 10px;">
                     @Html.DisplayFor(modelItem => item.DessertName)
+                </td>
+                <td style="border: 1px solid #ddd; padding: 10px;">
+                    @if (item.ImageDtos != null && item.ImageDtos.Count() > 0)
+                    {
+                        <img style="height: 10em" class="mt-2 shadow p-2 bg-white" src="@item.ImageDtos[0].ImagePath" alt="@item.DessertName" />
+                    }
+                    else
+                    {
+                        <text>No Image</text>
+                    }
                 </td>
                 <td style="border: 1px solid #ddd; padding: 10px;">
                     @Html.DisplayFor(modelItem => item.DessertDescription)

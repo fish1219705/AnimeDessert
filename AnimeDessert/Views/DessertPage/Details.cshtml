@@ -40,7 +40,7 @@
         <div style="margin-top: 20px; padding: 15px; background-color: #f2f2f2; border-radius: 8px;">
             <h3>Ingredients:</h3>
             <ul>
-                @foreach (var IngredientDto in Model.DessertIngredients)
+                @foreach (var IngredientDto in Model.DessertIngredients ?? [])
                 {
                     <li style="margin-bottom: 10px;">
                         <a href="/IngredientPage/Details/@IngredientDto.IngredientId"
@@ -59,7 +59,7 @@
                 <input style="display:none" name="dessertId" value="@Model.Dessert.DessertId" />
                 <select name="ingredientId"
                         style="padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
-                    @foreach (var IngredientDto in Model.AllIngredients)
+                    @foreach (var IngredientDto in Model.AllIngredients ?? [])
                     {
                         <option value="@IngredientDto.IngredientId">@IngredientDto.IngredientName</option>
                     }
@@ -74,7 +74,7 @@
         <div style="margin-top: 20px; padding: 15px; background-color: #e9e9e9; border-radius: 8px;">
             <h3>Reviews:</h3>
             <div style="padding: 10px; background: #fff; border-radius: 5px;">
-                @foreach (var ReviewDto in Model.DessertReviews)
+                @foreach (var ReviewDto in Model.DessertReviews ?? [])
                 {
                     <div style="border-bottom: 1px solid #ddd; padding: 10px;">@ReviewDto.ReviewContent</div>
                 }
@@ -86,12 +86,50 @@
         <div style="margin-top: 20px; padding: 15px; background-color: #f2f2f2; border-radius: 8px;">
             <h3>Instructions:</h3>
             <div style="padding: 10px; background: #fff; border-radius: 5px;">
-                @foreach (var InstructionDto in Model.DessertInstructions)
+                @foreach (var InstructionDto in Model.DessertInstructions ?? [])
                 {
                     <div style="border-bottom: 1px solid #ddd; padding: 10px;">
                         @InstructionDto.QtyOfIngredient @InstructionDto.IngredientName - @InstructionDto.DessertName (@InstructionDto.ChangeIngredientOption)
                     </div>
                 }
+            </div>
+        </div>
+
+        <div style="margin-top: 20px; padding: 15px; background-color: #f2f2f2; border-radius: 8px;">
+            <div class="mb-2 d-flex justify-content-between align-items-center">
+                <h3>Images:</h3>
+                <a href="/DessertPage/NewImages/@Model.Dessert.DessertId"
+                   style="background-color: #4CAF50; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; text-decoration: none;">
+                    Add
+                </a>
+            </div>
+            <div style="padding: 10px; background: #fff; border-radius: 5px;">
+                <div class="row">
+                    @for (int i = 0; i < (Model.DessertImages?.Count() ?? 0); i++)
+                    {
+                        AnimeDessert.Models.ImageDto imageDto = Model.DessertImages!.ElementAt(i);
+
+                        if (i != 0 && i % 4 == 0)
+                        {
+                            <hr class="mt-4" />
+                        }
+
+                        <div class="col-3">
+                            <div class="position-relative">
+                                <img class="w-100 shadow p-2 bg-white" src="@imageDto.ImagePath" alt="Image @imageDto.ImageId" />
+                                <form class="position-absolute border border-2 border-danger bg-white fs-6 p-1" style="right: 1em; bottom: 1em;" method="POST" asp-asp-controller="DessertPage" asp-action="RemoveImages" asp-route-id=@Model.Dessert.DessertId>
+                                    <input style="display:none" name="ImageIds" value="@imageDto.ImageId" />
+                                    <button type="submit" class="btn btn-close btn-sm"></button>
+                                </form>
+                            </div>
+                        </div>
+                    }
+
+                    @if (Model.DessertImages == null || Model.DessertImages.Count() == 0)
+                    {
+                        <p class="m-0">No Image</p>
+                    }
+                </div>
             </div>
         </div>
     </div>

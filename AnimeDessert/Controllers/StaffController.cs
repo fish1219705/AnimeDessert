@@ -1,5 +1,6 @@
 ﻿using AnimeDessert.Interfaces;
 using AnimeDessert.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AnimeDessert.Controllers
@@ -78,6 +79,7 @@ namespace AnimeDessert.Controllers
         /// </example>
         [HttpPut(template: "{id}")]
         [Consumes("application/json")]
+        [Authorize]
         public async Task<ActionResult> UpdateStaff(int id, [FromBody] UpdateStaffRequest request)
         {
             ServiceResponse response = await _staffService.UpdateStaff(id, request);
@@ -123,6 +125,7 @@ namespace AnimeDessert.Controllers
         /// </example>
         [HttpPost]
         [Consumes("application/json")]
+        [Authorize]
         public async Task<ActionResult> AddStaff([FromBody] AddStaffRequest request)
         {
             (ServiceResponse response, StaffDto? staffDto) = await _staffService.AddStaff(request);
@@ -158,6 +161,7 @@ namespace AnimeDessert.Controllers
         /// Response Code: 204 No Content
         /// </example>
         [HttpDelete(template: "{id}")]
+        [Authorize]
         public async Task<ActionResult> DeleteStaff(int id)
         {
             ServiceResponse response = await _staffService.DeleteStaff(id);

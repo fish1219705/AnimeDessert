@@ -38,7 +38,7 @@ namespace AnimeDessert.Models
 
         public CharacterVersionDto? CharacterVersionDto { get; set; }
 
-        // public DessertDto? DessertDto { get; set; }
+        public DessertDto? DessertDto { get; set; }
     }
 
     public class UploadImageFile

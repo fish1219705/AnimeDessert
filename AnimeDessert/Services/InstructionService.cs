@@ -1,5 +1,5 @@
-﻿using AnimeDessert.Interfaces;
-using AnimeDessert.Data;
+﻿using AnimeDessert.Data;
+using AnimeDessert.Interfaces;
 using AnimeDessert.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -33,9 +33,9 @@ namespace AnimeDessert.Services
                     ChangeIngredientOption = instruction.ChangeIngredientOption,
                     QtyOfIngredient = instruction.QtyOfIngredient,
                     DessertId = instruction.DessertId,
-                    DessertName = instruction.Dessert.DessertName,
+                    DessertName = instruction.Dessert?.DessertName,
                     IngredientId = instruction.IngredientId,
-                    IngredientName = instruction.Ingredient.IngredientName
+                    IngredientName = instruction.Ingredient?.IngredientName
                 });
             }
             return instructionDtos;
@@ -59,9 +59,9 @@ namespace AnimeDessert.Services
                 ChangeIngredientOption = instruction.ChangeIngredientOption,
                 QtyOfIngredient = instruction.QtyOfIngredient,
                 DessertId = instruction.DessertId,
-                DessertName = instruction.Dessert.DessertName,
+                DessertName = instruction.Dessert?.DessertName,
                 IngredientId = instruction.IngredientId,
-                IngredientName = instruction.Ingredient.IngredientName
+                IngredientName = instruction.Ingredient?.IngredientName
             };
             return instructionDto;
         }
@@ -171,7 +171,7 @@ namespace AnimeDessert.Services
                 await _context.SaveChangesAsync();
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 response.Status = ServiceStatus.Error;
                 response.Messages.Add("Error encountered while deleting instruction");
@@ -199,9 +199,9 @@ namespace AnimeDessert.Services
                     ChangeIngredientOption = instruction.ChangeIngredientOption,
                     QtyOfIngredient = instruction.QtyOfIngredient,
                     DessertId = instruction.DessertId,
-                    DessertName = instruction.Dessert.DessertName,
+                    DessertName = instruction.Dessert?.DessertName,
                     IngredientId = instruction.IngredientId,
-                    IngredientName = instruction.Ingredient.IngredientName
+                    IngredientName = instruction.Ingredient?.IngredientName
 
                 });
             }
@@ -226,9 +226,9 @@ namespace AnimeDessert.Services
                     ChangeIngredientOption = instruction.ChangeIngredientOption,
                     QtyOfIngredient = instruction.QtyOfIngredient,
                     DessertId = instruction.DessertId,
-                    DessertName = instruction.Dessert.DessertName,
+                    DessertName = instruction.Dessert?.DessertName,
                     IngredientId = instruction.IngredientId,
-                    IngredientName = instruction.Ingredient.IngredientName
+                    IngredientName = instruction.Ingredient?.IngredientName
 
                 });
             }

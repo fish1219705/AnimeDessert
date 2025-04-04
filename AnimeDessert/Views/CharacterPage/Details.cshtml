@@ -77,3 +77,42 @@
         </dd>
     </div>
 </dl>
+
+<hr />
+
+<dl class="row fs-4">
+    <div>
+        <dt class="mb-2 d-flex justify-content-between align-items-center">
+            Desserts:
+        </dt>
+        <dd class="row">
+            @for (int i = 0; i < (Model.DessertDtos?.Count() ?? 0); i++)
+            {
+                AnimeDessert.Models.DessertDto dessertDto = Model.DessertDtos!.ElementAt(i);
+
+                if (i != 0 && i % 4 == 0)
+                {
+                    <hr class="mt-4" />
+                }
+
+                <div class="col-3">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <a class="fs-5 text-decoration-none" asp-controller="DessertPage" asp-action="Details" asp-route-id="@dessertDto.DessertId">
+                            @dessertDto.DessertName
+                        </a>
+                    </div>
+
+                    @if (dessertDto.ImageDtos != null && dessertDto.ImageDtos.Count() > 0)
+                    {
+                        <img class="mt-2 w-100 shadow p-2 bg-white" src="@dessertDto.ImageDtos[0].ImagePath" alt="Image @dessertDto.ImageDtos[0].ImageId" />
+                    }
+                </div>
+            }
+
+            @if (Model.DessertDtos == null || Model.DessertDtos.Count() == 0)
+            {
+                <p>No Desserts</p>
+            }
+        </dd>
+    </div>
+</dl>

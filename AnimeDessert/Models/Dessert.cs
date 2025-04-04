@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -37,9 +38,26 @@ namespace AnimeDessert.Models
     public class DessertDto
     {
         public int DessertId { get; set; }
-        public string DessertName { get; set; }
-        public string DessertDescription { get; set; }
-        public string SpecificTag { get; set; }
+        public required string DessertName { get; set; }
+        public required string DessertDescription { get; set; }
+        public string? SpecificTag { get; set; }
 
+        public int? CharacterId { get; set; }
+
+        [DisplayName("Character")]
+        public CharacterDto? CharacterDto { get; set; }
+
+        [DisplayName("Image")]
+        public List<ImageDto>? ImageDtos { get; set; }
+    }
+
+    public class AddImagesToDessertRequest
+    {
+        public required List<IFormFile> ImageFiles { get; set; } = [];
+    }
+
+    public class RemoveImagesFromDessertRequest
+    {
+        public required List<int> ImageIds { get; set; } = [];
     }
 }

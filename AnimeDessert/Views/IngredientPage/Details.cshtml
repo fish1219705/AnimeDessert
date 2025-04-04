@@ -33,7 +33,7 @@
         <div style="margin-bottom: 20px;">
             <label style="font-weight: bold; color: #333;">Desserts:</label>
             <ul style="padding-left: 20px;">
-                @foreach (var DessertDto in Model.IngredientDesserts)
+                @foreach (var DessertDto in Model.IngredientDesserts ?? [])
                 {
                     <li style="margin-bottom: 10px;">@DessertDto.DessertName</li>
                 }
@@ -45,7 +45,7 @@
         <div style="margin-bottom: 20px;">
             <label style="font-weight: bold; color: #333;">Instructions:</label>
             <div style="padding-left: 20px;">
-                @foreach (var InstructionDto in Model.IngredientInstructions)
+                @foreach (var InstructionDto in Model.IngredientInstructions ?? [])
                 {
                     <div style="margin-bottom: 10px;">
                         @InstructionDto.QtyOfIngredient @InstructionDto.DessertName (@InstructionDto.ChangeIngredientOption)
@@ -55,4 +55,3 @@
         </div>
     </div>
 </div>
-

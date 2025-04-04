@@ -1,5 +1,6 @@
 ﻿using AnimeDessert.Interfaces;
 using AnimeDessert.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AnimeDessert.Controllers
@@ -62,6 +63,7 @@ namespace AnimeDessert.Controllers
         /// </example>
         [HttpPut(template: "{id}")]
         [Consumes("application/json")]
+        [Authorize]
         public async Task<ActionResult> UpdateCharacterVersion(int id, [FromBody] UpdateCharacterVersionRequest request)
         {
             ServiceResponse response = await _characterVersionService.UpdateCharacterVersion(id, request);
@@ -106,6 +108,7 @@ namespace AnimeDessert.Controllers
         /// </example>
         [HttpPost(template: "{id}/Image")]
         [Consumes("multipart/form-data")]
+        [Authorize]
         public async Task<ActionResult> AddImagesToCharacterVersion(int id, [FromForm] AddImagesToCharacterVersionRequest request)
         {
             ServiceResponse response = await _characterVersionService.AddImagesToCharacterVersion(id, request);
@@ -149,6 +152,7 @@ namespace AnimeDessert.Controllers
         /// </example>
         [HttpDelete(template: "{id}/Image")]
         [Consumes("application/json")]
+        [Authorize]
         public async Task<ActionResult> RemoveImagesFromCharacterVersion(int id, [FromBody] RemoveImagesFromCharacterVersionRequest request)
         {
             ServiceResponse response = await _characterVersionService.RemoveImagesFromCharacterVersion(id, request);
@@ -192,6 +196,7 @@ namespace AnimeDessert.Controllers
         /// </example>
         [HttpPost(template: "{id}/VoiceActor")]
         [Consumes("application/json")]
+        [Authorize]
         public async Task<ActionResult> AddVoiceActorsToCharacterVersion(int id, [FromBody] AddVoiceActorsToCharacterVersionRequest request)
         {
             ServiceResponse response = await _characterVersionService.AddVoiceActorsToCharacterVersion(id, request);
@@ -235,6 +240,7 @@ namespace AnimeDessert.Controllers
         /// </example>
         [HttpDelete(template: "{id}/VoiceActor")]
         [Consumes("application/json")]
+        [Authorize]
         public async Task<ActionResult> RemoveVoiceActorsFromCharacterVersion(int id, [FromBody] RemoveVoiceActorsFromCharacterVersionRequest request)
         {
             ServiceResponse response = await _characterVersionService.RemoveVoiceActorsFromCharacterVersion(id, request);

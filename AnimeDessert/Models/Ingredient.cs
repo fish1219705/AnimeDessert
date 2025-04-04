@@ -21,8 +21,8 @@ namespace AnimeDessert.Models
     public class IngredientDto
     {
         public int IngredientId { get; set; }
-        public string IngredientName { get; set; }
-        public string IngredientDescription { get; set; }
+        public required string IngredientName { get; set; }
+        public string? IngredientDescription { get; set; }
 
     }
 }

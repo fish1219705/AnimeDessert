@@ -1,8 +1,7 @@
 ﻿using AnimeDessert.Interfaces;
-using AnimeDessert.Models.ViewModels;
 using AnimeDessert.Models;
+using AnimeDessert.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AnimeDessert.Controllers
@@ -80,17 +79,15 @@ namespace AnimeDessert.Controllers
         public async Task<IActionResult> New()
         {
 
-            IEnumerable<IngredientDto?> IngredientDtos = await _ingredientService.ListIngredients();
+            IEnumerable<IngredientDto> IngredientDtos = await _ingredientService.ListIngredients();
 
-            IEnumerable<DessertDto?> DessertDtos = await _dessertService.ListDesserts();
+            IEnumerable<DessertDto> DessertDtos = await _dessertService.ListDesserts();
 
             InstructionNew Options = new InstructionNew()
             {
                 AllDesserts = DessertDtos,
                 AllIngredients = IngredientDtos
             };
-
-
 
             return View(Options);
         }

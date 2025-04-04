@@ -26,7 +26,7 @@ namespace AnimeDessert.Models
 
         public List<CharacterVersionDto>? CharacterVersionDtos { get; set; }
 
-        // public List<DessertDto>? DessertDtos { get; set; }
+        public List<DessertDto>? DessertDtos { get; set; }
     }
 
     public class UpdateCharacterRequest

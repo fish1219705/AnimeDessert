@@ -1,14 +1,7 @@
 ﻿using AnimeDessert.Interfaces;
 using AnimeDessert.Models;
-using AnimeDessert.Data;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
 
 namespace AnimeDessert.Controllers
 {
@@ -285,6 +278,110 @@ namespace AnimeDessert.Controllers
 
             return NoContent();
 
+        }
+
+        /// <summary>
+        /// Returns a list of Images for Dessert {id}
+        /// </summary>
+        /// <returns>
+        /// 200 OK
+        /// [ {ImageDto}, {ImageDto}, ... ]
+        /// </returns>
+        /// <example>
+        /// GET: api/Dessert/ListImages/1 -> [ {ImageDto}, {ImageDto}, ... ]
+        /// </example>
+        [HttpGet(template: "ListImages/{id}")]
+        public async Task<ActionResult<IEnumerable<ImageDto>>> ListImagesForDessert(int id)
+        {
+            IEnumerable<ImageDto> imageDtos = await _dessertService.ListImagesForDessert(id);
+            return Ok(imageDtos);
+        }
+
+        /// <summary>
+        /// Adds Images to a Dessert
+        /// </summary>
+        /// <param name="request">The required information to add Images to an Dessert (ImageFiles)</param>
+        /// <returns>
+        /// 200 OK
+        /// [string, ...] Including a message for no. of affected records
+        /// or
+        /// 400 Bad Request
+        /// or
+        /// 404 Not Found
+        /// or
+        /// 500 Internal Server Error
+        /// </returns>
+        /// <example>
+        /// POST: api/Dessert/AddImages/1
+        /// Request Headers: { "Content-Type": "multipart/form-data" }
+        /// Request Form Data: {AddImagesToDessertRequest}
+        /// ->
+        /// Response Code: 200 OK
+        /// Response Body: ["3 records are affected."]
+        /// </example>
+        [HttpPost(template: "AddImages/{id}")]
+        [Consumes("multipart/form-data")]
+        [Authorize]
+        public async Task<ActionResult> AddImagesToDessert(int id, [FromForm] AddImagesToDessertRequest request)
+        {
+            ServiceResponse response = await _dessertService.AddImagesToDessert(id, request);
+
+            switch (response.Status)
+            {
+                case ServiceStatus.BadRequest:
+                    return BadRequest(response.Messages);
+                case ServiceStatus.NotFound:
+                    return NotFound(response.Messages);
+                case ServiceStatus.Error:
+                    return StatusCode(500, response.Messages);
+                default:
+                    // Status = Created
+                    return Ok(response.Messages);
+            }
+        }
+
+        /// <summary>
+        /// Remove Images from a Dessert
+        /// </summary>
+        /// <param name="id">The id of the Dessert</param>
+        /// <param name="request">The request object, including a list of Image Ids (int)</param>
+        /// <returns>
+        /// 200 OK
+        /// [string, ...] Including a message for no. of affected records
+        /// or
+        /// 400 Bad Request
+        /// or
+        /// 404 Not Found
+        /// or
+        /// 500 Internal Server Error
+        /// </returns>
+        /// <example>
+        /// DELETE: api/Dessert/RemoveImages/1
+        /// Headers: { "Content-Type": "application/json" }
+        /// Body: { ImageIds: [ 1, 2, 3 ] }
+        /// ->
+        /// Response Code: 200 OK
+        /// Response Body: ["3 records are affected."]
+        /// </example>
+        [HttpDelete(template: "RemoveImages/{id}")]
+        [Consumes("application/json")]
+        [Authorize]
+        public async Task<ActionResult> RemoveImagesFromDessert(int id, [FromBody] RemoveImagesFromDessertRequest request)
+        {
+            ServiceResponse response = await _dessertService.RemoveImagesFromDessert(id, request);
+
+            switch (response.Status)
+            {
+                case ServiceStatus.BadRequest:
+                    return BadRequest(response.Messages);
+                case ServiceStatus.NotFound:
+                    return NotFound(response.Messages);
+                case ServiceStatus.Error:
+                    return StatusCode(500, response.Messages);
+                default:
+                    // Status = Deleted
+                    return Ok(response.Messages);
+            }
         }
     }
 }

@@ -6,16 +6,22 @@
         public required DessertDto Dessert { get; set; }
 
         //A dessert page can have many ingredients
-        public IEnumerable<IngredientDto> DessertIngredients { get; set; }
+        public IEnumerable<IngredientDto>? DessertIngredients { get; set; }
 
         // All ingredients
         // ListIngredients()
         public IEnumerable<IngredientDto>? AllIngredients { get; set; }
 
         //A dessert page can have many reviews
-        public IEnumerable<ReviewDto> DessertReviews { get; set; }
+        public IEnumerable<ReviewDto>? DessertReviews { get; set; }
 
         // All instructions for this dessert
         public IEnumerable<InstructionDto>? DessertInstructions { get; set; }
+
+        // All images for this dessert
+        public IEnumerable<ImageDto>? DessertImages { get; set; }
+
+        // The character associated with this dessert
+        public CharacterDto? DessertCharacter { get; set; }
     }
 }

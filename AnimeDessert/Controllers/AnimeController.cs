@@ -1,5 +1,6 @@
 ﻿using AnimeDessert.Interfaces;
 using AnimeDessert.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AnimeDessert.Controllers
@@ -78,6 +79,7 @@ namespace AnimeDessert.Controllers
         /// </example>
         [HttpPut(template: "{id}")]
         [Consumes("application/json")]
+        [Authorize]
         public async Task<ActionResult> UpdateAnime(int id, [FromBody] UpdateAnimeRequest request)
         {
             ServiceResponse response = await _animeService.UpdateAnime(id, request);
@@ -123,6 +125,7 @@ namespace AnimeDessert.Controllers
         /// </example>
         [HttpPost]
         [Consumes("multipart/form-data")]
+        [Authorize]
         public async Task<ActionResult> AddAnime([FromForm] AddAnimeRequest request)
         {
             (ServiceResponse response, AnimeDto? animeDto) = await _animeService.AddAnime(request);
@@ -158,6 +161,7 @@ namespace AnimeDessert.Controllers
         /// Response Code: 204 No Content
         /// </example>
         [HttpDelete(template: "{id}")]
+        [Authorize]
         public async Task<ActionResult> DeleteAnime(int id)
         {
             ServiceResponse response = await _animeService.DeleteAnime(id);
@@ -199,6 +203,7 @@ namespace AnimeDessert.Controllers
         /// </example>
         [HttpPost(template: "{id}/CharacterVersion")]
         [Consumes("application/json")]
+        [Authorize]
         public async Task<ActionResult> AddCharacterVersionsToAnime(int id, [FromBody] AddCharacterVersionsToAnimeRequest request)
         {
             ServiceResponse response = await _animeService.AddCharacterVersionsToAnime(id, request);
@@ -242,6 +247,7 @@ namespace AnimeDessert.Controllers
         /// </example>
         [HttpDelete(template: "{id}/CharacterVersion")]
         [Consumes("application/json")]
+        [Authorize]
         public async Task<ActionResult> RemoveCharacterVersionsFromAnime(int id, [FromBody] RemoveCharacterVersionsFromAnimeRequest request)
         {
             ServiceResponse response = await _animeService.RemoveCharacterVersionsFromAnime(id, request);
@@ -284,6 +290,7 @@ namespace AnimeDessert.Controllers
         /// </example>
         [HttpPost(template: "{id}/Image")]
         [Consumes("multipart/form-data")]
+        [Authorize]
         public async Task<ActionResult> AddImagesToAnime(int id, [FromForm] AddImagesToAnimeRequest request)
         {
             ServiceResponse response = await _animeService.AddImagesToAnime(id, request);
@@ -327,6 +334,7 @@ namespace AnimeDessert.Controllers
         /// </example>
         [HttpDelete(template: "{id}/Image")]
         [Consumes("application/json")]
+        [Authorize]
         public async Task<ActionResult> RemoveImagesFromAnime(int id, [FromBody] RemoveImagesFromAnimeRequest request)
         {
             ServiceResponse response = await _animeService.RemoveImagesFromAnime(id, request);
@@ -369,6 +377,7 @@ namespace AnimeDessert.Controllers
         /// </example>
         [HttpPost(template: "{id}/Music")]
         [Consumes("multipart/form-data")]
+        [Authorize]
         public async Task<ActionResult> AddMusicsToAnime(int id, [FromForm] AddMusicsToAnimeRequest request)
         {
             ServiceResponse response = await _animeService.AddMusicsToAnime(id, request);
@@ -412,6 +421,7 @@ namespace AnimeDessert.Controllers
         /// </example>
         [HttpDelete(template: "{id}/Music")]
         [Consumes("application/json")]
+        [Authorize]
         public async Task<ActionResult> RemoveMusicsFromAnime(int id, [FromBody] RemoveMusicsFromAnimeRequest request)
         {
             ServiceResponse response = await _animeService.RemoveMusicsFromAnime(id, request);

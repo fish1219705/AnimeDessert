@@ -1,6 +1,7 @@
 ﻿using AnimeDessert.Interfaces;
 using AnimeDessert.Models;
 using AnimeDessert.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AnimeDessert.Controllers
@@ -37,6 +38,7 @@ namespace AnimeDessert.Controllers
 
         // GET: Anime/New
         [HttpGet("New")]
+        [Authorize]
         public ActionResult New()
         {
             return View();
@@ -45,6 +47,7 @@ namespace AnimeDessert.Controllers
         // POST: Anime/Add
         [HttpPost("Add")]
         [Consumes("multipart/form-data")]
+        [Authorize]
         public async Task<IActionResult> Add([FromForm] AddAnimeRequest request)
         {
             (ServiceResponse response, AnimeDto? animeDto) = await _animeService.AddAnime(request);
@@ -56,6 +59,7 @@ namespace AnimeDessert.Controllers
 
         // GET: Anime/{id}/Edit
         [HttpGet("{id}/Edit")]
+        [Authorize]
         public async Task<IActionResult> Edit(int id)
         {
             AnimeDto? animeDto = await _animeService.FindAnime(id);
@@ -67,6 +71,7 @@ namespace AnimeDessert.Controllers
 
         // POST: Anime/{id}/Update
         [HttpPost("Anime/{id}/Update")]
+        [Authorize]
         public async Task<IActionResult> Update(int id, [FromForm] UpdateAnimeRequest request)
         {
             ServiceResponse response = await _animeService.UpdateAnime(id, request);
@@ -78,6 +83,7 @@ namespace AnimeDessert.Controllers
 
         // GET: Anime/{id}/ConfirmDelete
         [HttpGet("Anime/{id}/ConfirmDelete")]
+        [Authorize]
         public async Task<IActionResult> ConfirmDelete(int id)
         {
             AnimeDto? animeDto = await _animeService.FindAnime(id);
@@ -89,6 +95,7 @@ namespace AnimeDessert.Controllers
 
         // POST: Anime/{id}/Delete
         [HttpPost("Anime/{id}/Delete")]
+        [Authorize]
         public async Task<IActionResult> Delete(int id)
         {
             ServiceResponse response = await _animeService.DeleteAnime(id);
@@ -100,6 +107,7 @@ namespace AnimeDessert.Controllers
 
         // GET: Anime/{id}/NewImages
         [HttpGet("{id}/NewImages")]
+        [Authorize]
         public async Task<IActionResult> NewImages(int id)
         {
             AnimeDto? animeDto = await _animeService.FindAnime(id);
@@ -112,6 +120,7 @@ namespace AnimeDessert.Controllers
         // POST: Anime/{id}/AddImages
         [HttpPost("{id}/AddImages")]
         [Consumes("multipart/form-data")]
+        [Authorize]
         public async Task<IActionResult> AddImages(int id, [FromForm] AddImagesToAnimeRequest request)
         {
             ServiceResponse response = await _animeService.AddImagesToAnime(id, request);
@@ -123,6 +132,7 @@ namespace AnimeDessert.Controllers
 
         // POST: Anime/{id}/RemoveImages
         [HttpPost("{id}/RemoveImages")]
+        [Authorize]
         public async Task<IActionResult> RemoveImages(int id, [FromForm] RemoveImagesFromAnimeRequest request)
         {
             ServiceResponse response = await _animeService.RemoveImagesFromAnime(id, request);
@@ -134,6 +144,7 @@ namespace AnimeDessert.Controllers
 
         // GET: Anime/{id}/NewMusics
         [HttpGet("{id}/NewMusics")]
+        [Authorize]
         public async Task<IActionResult> NewMusics(int id)
         {
             AnimeDto? animeDto = await _animeService.FindAnime(id);
@@ -146,6 +157,7 @@ namespace AnimeDessert.Controllers
         // POST: Anime/{id}/AddMusics
         [HttpPost("{id}/AddMusics")]
         [Consumes("multipart/form-data")]
+        [Authorize]
         public async Task<IActionResult> AddMusics(int id, [FromForm] AddMusicsToAnimeRequest request)
         {
             ServiceResponse response = await _animeService.AddMusicsToAnime(id, request);
@@ -157,6 +169,7 @@ namespace AnimeDessert.Controllers
 
         // POST: Anime/{id}/RemoveMusics
         [HttpPost("{id}/RemoveMusics")]
+        [Authorize]
         public async Task<IActionResult> RemoveMusics(int id, [FromForm] RemoveMusicsFromAnimeRequest request)
         {
             ServiceResponse response = await _animeService.RemoveMusicsFromAnime(id, request);
@@ -168,6 +181,7 @@ namespace AnimeDessert.Controllers
 
         // GET: Anime/{id}/NewCharacters
         [HttpGet("{id}/NewCharacters")]
+        [Authorize]
         public async Task<IActionResult> NewCharacters(int id)
         {
             AnimeDto? animeDto = await _animeService.FindAnime(id);
@@ -180,6 +194,7 @@ namespace AnimeDessert.Controllers
 
         // POST: Anime/{id}/AddCharacters
         [HttpPost("{id}/AddCharacters")]
+        [Authorize]
         public async Task<IActionResult> AddCharacters(int id, [FromForm] AddCharacterVersionsToAnimeRequest request)
         {
             ServiceResponse response = await _animeService.AddCharacterVersionsToAnime(id, request);
@@ -191,6 +206,7 @@ namespace AnimeDessert.Controllers
 
         // POST: Anime/{id}/RemoveCharacters
         [HttpPost("{id}/RemoveCharacters")]
+        [Authorize]
         public async Task<IActionResult> RemoveCharacters(int id, [FromForm] RemoveCharacterVersionsFromAnimeRequest request)
         {
             ServiceResponse response = await _animeService.RemoveCharacterVersionsFromAnime(id, request);

@@ -35,9 +35,12 @@ namespace AnimeDessert.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // Uniqueness for DessertId to be done
-            // In Images table, enforce ((AnimeId IS NULL) XOR (CharacterVersionId IS NULL)) ≡ True
-            modelBuilder.Entity<Image>().ToTable(i => i.HasCheckConstraint("CK_Images_AnimeId_CharacterVersionId", "(AnimeId IS NULL OR CharacterVersionId IS NULL) AND (AnimeId IS NOT NULL OR CharacterVersionId IS NOT NULL)"));
+            // In Images table, enforce only one of AnimeId, CharacterVersionId, or DessertId can be set
+            modelBuilder.Entity<Image>()
+                .ToTable(i => i.HasCheckConstraint("CK_Images_AnimeId_CharacterVersionId_DessertId",
+                    "(CASE WHEN AnimeId IS NOT NULL THEN 1 ELSE 0 END) + " +
+                    "(CASE WHEN CharacterVersionId IS NOT NULL THEN 1 ELSE 0 END) + " +
+                    "(CASE WHEN DessertId IS NOT NULL THEN 1 ELSE 0 END) = 1"));
         }
     }
 }

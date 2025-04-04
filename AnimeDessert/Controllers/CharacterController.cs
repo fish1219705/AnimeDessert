@@ -1,5 +1,6 @@
 ﻿using AnimeDessert.Interfaces;
 using AnimeDessert.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AnimeDessert.Controllers
@@ -78,6 +79,7 @@ namespace AnimeDessert.Controllers
         /// </example>
         [HttpPut(template: "{id}")]
         [Consumes("application/json")]
+        [Authorize]
         public async Task<ActionResult> UpdateCharacter(int id, [FromBody] UpdateCharacterRequest request)
         {
             ServiceResponse response = await _characterService.UpdateCharacter(id, request);
@@ -121,6 +123,7 @@ namespace AnimeDessert.Controllers
         /// </example>
         [HttpPost]
         [Consumes("multipart/form-data")]
+        [Authorize]
         public async Task<ActionResult> AddCharacter([FromForm] AddCharacterRequest request)
         {
             (ServiceResponse response, CharacterDto? characterDto) = await _characterService.AddCharacter(request);
@@ -154,6 +157,7 @@ namespace AnimeDessert.Controllers
         /// Response Code: 204 No Content
         /// </example>
         [HttpDelete(template: "{id}")]
+        [Authorize]
         public async Task<ActionResult> DeleteCharacter(int id)
         {
             ServiceResponse response = await _characterService.DeleteCharacter(id);
@@ -198,6 +202,7 @@ namespace AnimeDessert.Controllers
         /// </example>
         [HttpPost(template: "{id}/Version")]
         [Consumes("multipart/form-data")]
+        [Authorize]
         public async Task<ActionResult> AddVersionToCharacter(int id, [FromForm] AddVersionToCharacterRequest request)
         {
             (ServiceResponse response, CharacterVersionDto? characterVersionDto) = await _characterService.AddVersionToCharacter(id, request);
@@ -243,6 +248,7 @@ namespace AnimeDessert.Controllers
         /// </example>
         [HttpDelete(template: "{id}/Version")]
         [Consumes("application/json")]
+        [Authorize]
         public async Task<ActionResult> RemoveVersionsFromCharacter(int id, [FromBody] RemoveVersionsFromCharacterRequest request)
         {
             ServiceResponse response = await _characterService.RemoveVersionsFromCharacter(id, request);
@@ -259,6 +265,23 @@ namespace AnimeDessert.Controllers
                     // Status = Deleted
                     return Ok(response.Messages);
             }
+        }
+
+        /// <summary>
+        /// Returns a list of Desserts for Character {id}
+        /// </summary>
+        /// <returns>
+        /// 200 OK
+        /// [ {DessertDto}, {DessertDto}, ... ]
+        /// </returns>
+        /// <example>
+        /// GET: api/Character/1/Dessert -> [ {DessertDto}, {DessertDto}, ... ]
+        /// </example>
+        [HttpGet(template: "{id}/Dessert")]
+        public async Task<ActionResult<IEnumerable<DessertDto>>> ListDessertsForCharacter(int id)
+        {
+            IEnumerable<DessertDto> dessertDtos = await _characterService.ListDessertsForCharacter(id);
+            return Ok(dessertDtos);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using AnimeDessert.Interfaces;
 using AnimeDessert.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AnimeDessert.Controllers
@@ -42,6 +43,7 @@ namespace AnimeDessert.Controllers
         /// </example>
         [HttpPost(template: "{id}/Singer")]
         [Consumes("application/json")]
+        [Authorize]
         public async Task<ActionResult> AddSingersToMusic(int id, [FromBody] AddSingersToMusicRequest request)
         {
             ServiceResponse response = await _musicService.AddSingersToMusic(id, request);
@@ -85,6 +87,7 @@ namespace AnimeDessert.Controllers
         /// </example>
         [HttpDelete(template: "{id}/Singer")]
         [Consumes("application/json")]
+        [Authorize]
         public async Task<ActionResult> RemoveSingersFromMusic(int id, [FromBody] RemoveSingersFromMusicRequest request)
         {
             ServiceResponse response = await _musicService.RemoveSingersFromMusic(id, request);

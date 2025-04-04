@@ -26,15 +26,15 @@ namespace AnimeDessert.Models
     public class InstructionDto
     {
         public int InstructionId { get; set; }
-        public string ChangeIngredientOption { get; set; }
-        public string QtyOfIngredient { get; set; }
+        public string? ChangeIngredientOption { get; set; }
+        public required string QtyOfIngredient { get; set; }
         public int DessertId { get; set; }
         public int IngredientId { get; set; }
 
         //flattened from Instruction -> Dessert
-        public string DessertName { get; set; }
+        public string? DessertName { get; set; }
 
         //flattened from Instruction -> Ingredient
-        public string IngredientName { get; set; }
+        public string? IngredientName { get; set; }
     }
 }

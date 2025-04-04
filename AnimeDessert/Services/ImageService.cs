@@ -17,12 +17,18 @@ namespace AnimeDessert.Services
                 image.CharacterVersion.Images = null;
             }
 
+            if (image.Dessert != null)
+            {
+                image.Dessert.Images = null;
+            }
+
             return new ImageDto
             {
                 ImageId = image.ImageId,
                 ImagePath = $"/assets/images/{image.ImageFilename}",
                 AnimeDto = image.Anime == null ? null : AnimeService.ToAnimeDto(image.Anime),
-                CharacterVersionDto = image.CharacterVersion == null ? null : CharacterVersionService.ToCharacterVersionDto(image.CharacterVersion)
+                CharacterVersionDto = image.CharacterVersion == null ? null : CharacterVersionService.ToCharacterVersionDto(image.CharacterVersion),
+                DessertDto = null
             };
         }
 

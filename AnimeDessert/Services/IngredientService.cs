@@ -1,8 +1,7 @@
-﻿using AnimeDessert.Interfaces;
-using AnimeDessert.Data;
+﻿using AnimeDessert.Data;
+using AnimeDessert.Interfaces;
 using AnimeDessert.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
 
 
 namespace AnimeDessert.Services
@@ -142,7 +141,7 @@ namespace AnimeDessert.Services
                 await _context.SaveChangesAsync();
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 response.Status = ServiceStatus.Error;
                 response.Messages.Add("Error encountered while deleting the Ingredient");
@@ -159,7 +158,7 @@ namespace AnimeDessert.Services
 
             // join DessertIngredient on Ingredients.Ingredientid = DessertIngredient.Ingredientid WHERE DessertIngredient.dessertid = {id}
             List<Ingredient> Ingredients = await _context.Ingredients
-            .Where(i => i.Desserts.Any(d => d.DessertId == id))
+            .Where(i => i.Desserts!.Any(d => d.DessertId == id))
             .ToListAsync();
 
             // empty list of data transfer object IngredientDto
@@ -187,25 +186,30 @@ namespace AnimeDessert.Services
                 .Include(i => i.Desserts)
                 .Where(i => i.IngredientId == ingredientId)
                 .FirstOrDefaultAsync();
+
             Dessert? dessert = await _context.Desserts.FindAsync(dessertId);
 
             // Data must link to a valid entity
             if (dessert == null || ingredient == null)
             {
                 serviceResponse.Status = ServiceStatus.NotFound;
+
                 if (dessert == null)
                 {
-                    serviceResponse.Messages.Add("Dessert was not found. ");
+                    serviceResponse.Messages.Add("Dessert was not found.");
                 }
+
                 if (ingredient == null)
                 {
                     serviceResponse.Messages.Add("Ingredient was not found.");
                 }
+
                 return serviceResponse;
             }
+
             try
             {
-                ingredient.Desserts.Add(dessert);
+                ingredient.Desserts!.Add(dessert);
                 _context.SaveChanges();
             }
             catch (Exception Ex)
@@ -213,7 +217,6 @@ namespace AnimeDessert.Services
                 serviceResponse.Messages.Add("There was an issue linking the dessert to the ingredient");
                 serviceResponse.Messages.Add(Ex.Message);
             }
-
 
             serviceResponse.Status = ServiceStatus.Created;
             return serviceResponse;
@@ -227,25 +230,30 @@ namespace AnimeDessert.Services
                 .Include(i => i.Desserts)
                 .Where(i => i.IngredientId == ingredientId)
                 .FirstOrDefaultAsync();
+
             Dessert? dessert = await _context.Desserts.FindAsync(dessertId);
 
             // Data must link to a valid entity
             if (dessert == null || ingredient == null)
             {
                 serviceResponse.Status = ServiceStatus.NotFound;
+
                 if (dessert == null)
                 {
                     serviceResponse.Messages.Add("Dessert was not found. ");
                 }
+
                 if (ingredient == null)
                 {
                     serviceResponse.Messages.Add("Ingredient was not found.");
                 }
+
                 return serviceResponse;
             }
+
             try
             {
-                ingredient.Desserts.Remove(dessert);
+                ingredient.Desserts!.Remove(dessert);
                 _context.SaveChanges();
             }
             catch (Exception Ex)
@@ -253,7 +261,6 @@ namespace AnimeDessert.Services
                 serviceResponse.Messages.Add("There was an issue unlinking the dessert to the ingredient");
                 serviceResponse.Messages.Add(Ex.Message);
             }
-
 
             serviceResponse.Status = ServiceStatus.Deleted;
             return serviceResponse;

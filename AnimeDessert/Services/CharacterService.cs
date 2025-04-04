@@ -520,5 +520,37 @@ namespace AnimeDessert.Services
             response.Messages.Add($"{affectedRecordsNumber} records are affected.");
             return response;
         }
+
+        public async Task<IEnumerable<DessertDto>> ListDessertsForCharacter(int id)
+        {
+            // Find Desserts for Character {id}
+            List<Dessert> desserts = await _context.Desserts
+                .Where(d => d.CharacterId == id)
+                .Select(
+                    d => new Dessert
+                    {
+                        DessertId = d.DessertId,
+                        DessertName = d.DessertName,
+                        DessertDescription = d.DessertDescription,
+                        SpecificTag = d.SpecificTag,
+                        Images = d.Images!.OrderBy(i => i.ImageId).Take(1).ToList()
+                    }
+                )
+                .ToListAsync();
+
+            // Convert to Dtos
+            IEnumerable<DessertDto> dessertDtos = desserts.Select(
+                d => new DessertDto
+                {
+                    DessertId = d.DessertId,
+                    DessertName = d.DessertName,
+                    DessertDescription = d.DessertDescription,
+                    SpecificTag = d.SpecificTag,
+                    ImageDtos = d.Images?.Select(ImageService.ToImageDto).ToList()
+                }
+            );
+
+            return dessertDtos;
+        }
     }
 }
