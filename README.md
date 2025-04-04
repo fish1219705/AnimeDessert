@@ -6,6 +6,18 @@ AnimeDessert is a web app built by ASP .NET Core 8 MVC with Entity Framework Cor
 
 ---
 
+## Task Allocation
+
+- Yik Kan Sze
+    - ListDessertsForCharacter, UpdateDessert, ListImagesForDessert, AddImagesToDessert, and RemoveImagesFromDessert APIs
+    - Display Desserts of Character in Character Detail Page
+    - Display Images of Dessert in Dessert Detail Page with delete buttons
+    - Add Images to Dessert function in Views
+
+- Peiyu Han
+    - Display Charater of Dessert in Dessert Detail Page
+    - Allow updating Character of Dessert in Dessert Edit Page
+
 ## Features
 
 - CRUD for Anime Database
