@@ -39,6 +39,18 @@
                        style="color: #2196F3; text-decoration: none;">
                         @Model.DessertCharacter.CharacterName
                     </a>
+                
+                @* Show first image from first version, if available *@
+                @if (Model.CharacterVersionDtos != null && Model.CharacterVersionDtos.Any())
+                {
+                        var firstVersion = Model.CharacterVersionDtos.FirstOrDefault();
+                        if (firstVersion != null && firstVersion.ImageDtos != null && firstVersion.ImageDtos.Any())
+                        {
+                            <img src="@firstVersion.ImageDtos[0].ImagePath"
+                                 alt="Character Image"
+                                 style="height: 40px; width: auto; border-radius: 5px;" />
+                        }
+                }
                 }
                 else
                 {

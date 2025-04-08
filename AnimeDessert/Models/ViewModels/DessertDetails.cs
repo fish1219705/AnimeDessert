@@ -27,5 +27,8 @@
 
         // The character associated with this dessert
         public CharacterDto? DessertCharacter { get; set; }
+
+        public IEnumerable<CharacterVersionDto>? CharacterVersionDtos { get; set; }
+        public ImageDto? FirstCharacterImage { get; set; }
     }
 }

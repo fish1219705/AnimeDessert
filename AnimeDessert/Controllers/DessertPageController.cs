@@ -55,8 +55,20 @@ namespace AnimeDessert.Controllers
             {
                 return View("Error", new ErrorViewModel() { Errors = ["Could not find dessert"] });
             }
-            else
+            CharacterDto? characterDto = null;
+            IEnumerable<CharacterVersionDto>? characterVersions = null;
+            ImageDto? firstCharacterImage = null;
+
+            if (DessertDto.CharacterId != null)
             {
+                characterDto = await _characterService.FindCharacter((int)DessertDto.CharacterId);
+                characterVersions = characterDto?.CharacterVersionDtos;
+                firstCharacterImage = characterDto?.CharacterVersionDtos?
+                .FirstOrDefault()?
+                .ImageDtos?
+                .FirstOrDefault();
+            }
+       
                 // information which drives a dessert page
                 DessertDetails DessertInfo = new DessertDetails()
                 {
@@ -66,11 +78,13 @@ namespace AnimeDessert.Controllers
                     DessertReviews = AssociatedReviews,
                     DessertInstructions = Instructions,
                     DessertImages = Images,
-                    DessertCharacter = DessertDto.CharacterId == null ? null : await _characterService.FindCharacter((int)DessertDto.CharacterId)
+                    DessertCharacter = DessertDto.CharacterId == null ? null : await _characterService.FindCharacter((int)DessertDto.CharacterId),
+                    CharacterVersionDtos = characterVersions,
+                    FirstCharacterImage = firstCharacterImage
                 };
                 return View(DessertInfo);
             }
-        }
+        
         // GET DessertPage/New
         [Authorize]
         public ActionResult New()

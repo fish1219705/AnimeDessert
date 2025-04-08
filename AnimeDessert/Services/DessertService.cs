@@ -458,34 +458,6 @@ namespace AnimeDessert.Services
             return response;
         }
 
-        //public async Task<CharacterDto?> GetCharacterRelatedToDessert(int dessertId)
-        //{
-        //    // Find the dessert with the specified ID, including the related character
-        //    Dessert? dessert = await _context.Desserts
-        //        .Include(d => d.Character) // Eagerly load the related character
-        //        .FirstOrDefaultAsync(d => d.DessertId == dessertId);
-
-        //    // Check if the dessert exists
-        //    if (dessert == null)
-        //    {
-        //        return null; // Dessert not found
-        //    }
-
-        //    // Check if the dessert is linked to a character
-        //    if (dessert.Character == null)
-        //    {
-        //        return null; // No character linked to this dessert
-        //    }
-
-        //    // Prepare the character DTO
-        //    CharacterDto characterDto = new CharacterDto
-        //    {
-        //        CharacterId = dessert.Character.CharacterId,
-        //        CharacterName = dessert.Character.CharacterName,
-        //        // Include other character properties as needed
-        //    };
-
-        //    return characterDto; // Return the character DTO
-        //}
+        
     }
 }
