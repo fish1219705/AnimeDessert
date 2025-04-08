@@ -108,11 +108,13 @@ namespace AnimeDessert.Controllers
             }
             else
             {
+                var allCharacters = await _characterService.ListCharacters(); // Ensure this method exists
                 // information which drives a dessert page
                 DessertDetails DessertInfo = new DessertDetails()
                 {
                     Dessert = DessertDto,
-                    DessertCharacter = DessertDto.CharacterId == null ? null : await _characterService.FindCharacter((int)DessertDto.CharacterId)
+                    DessertCharacter = DessertDto.CharacterId == null ? null : await _characterService.FindCharacter((int)DessertDto.CharacterId),
+                    AllCharacters = allCharacters
                 };
 
                 return View(DessertInfo);
@@ -226,5 +228,47 @@ namespace AnimeDessert.Controllers
                 ? RedirectToAction("Details", "DessertPage", new { id = id })
                 : View("Error", new ErrorViewModel() { Errors = response.Messages });
         }
+
+        //POST DessertPage/LinkToCharacter
+        //DATA: characterId={characterId}&dessertId={dessertId}
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> LinkToCharacter([FromForm] int dessertId, [FromForm] int characterId)
+        {
+            await _characterService.LinkCharacterToDessert(characterId, dessertId);
+
+            return RedirectToAction("Edit", new { id = dessertId });
+        }
+
+        //POST DessertPage/UnlinkFromCharacter
+        //DATA: characterId={characterId}&dessertId={dessertId}
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> UnlinkFromCharacter([FromForm] int dessertId, [FromForm] int characterId)
+        {
+            await _characterService.UnlinkCharacterFromDessert(characterId, dessertId);
+
+            return RedirectToAction("Edit", new { id = dessertId });
+        }
+
+        //// POST DessertPage/LinkToCharacter
+        //[HttpPost]
+        //[Authorize]
+        //public async Task<IActionResult> LinkToCharacter([FromForm] int dessertId, [FromForm] int characterId)
+        //{
+        //    await _characterService.LinkCharacterToDessert(characterId, dessertId);
+        //    return Json(new { success = true, characterId = characterId });
+        //}
+
+        //// POST DessertPage/UnlinkFromCharacter
+        //[HttpPost]
+        //[Authorize]
+        //public async Task<IActionResult> UnlinkFromCharacter([FromForm] int dessertId, [FromForm] int characterId)
+        //{
+        //    await _characterService.UnlinkCharacterFromDessert(characterId, dessertId);
+        //    return Json(new { success = true });
+        //}
+
+
     }
 }

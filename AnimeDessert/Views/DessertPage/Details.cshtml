@@ -31,6 +31,23 @@
         </div>
 
         <div style="margin-bottom: 15px;">
+            <label style="font-weight: bold;">Character:</label>
+            <div style="padding: 8px; background: #fff; border-radius: 5px;">
+                @if (Model.DessertCharacter != null)
+                {
+                    <a href="/Character/@Model.DessertCharacter.CharacterId"
+                       style="color: #2196F3; text-decoration: none;">
+                        @Model.DessertCharacter.CharacterName
+                    </a>
+                }
+                else
+                {
+                    <span>No character assigned</span>
+                }
+            </div>
+        </div>
+
+        <div style="margin-bottom: 15px;">
             <label style="font-weight: bold;">Specific Tag:</label>
             <div style="padding: 8px; background: #fff; border-radius: 5px;">@Model.Dessert.SpecificTag</div>
         </div>
