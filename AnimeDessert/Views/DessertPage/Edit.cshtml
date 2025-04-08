@@ -44,18 +44,29 @@
         <div style="margin-bottom: 15px;">
             <label style="font-weight: bold;">Character:</label>
             <div style="padding: 8px; background: #fff; border-radius: 5px; display: flex; justify-content: space-between; align-items: center;">
-                @if (Model.Dessert.CharacterDto != null)
+                @if (Model.DessertCharacter != null)
                 {
                     <div style="display: flex; align-items: center;">
-                        <a href="/CharacterPage/Details/@Model.Dessert.CharacterDto.CharacterId"
+                        <a href="/CharacterPage/Details/@Model.DessertCharacter.CharacterId"
                            style="color: #2196F3; text-decoration: none; font-weight: bold; margin-right: 10px;">
-                            @Model.Dessert.CharacterDto.CharacterName
+                            @Model.DessertCharacter.CharacterName
                         </a>
+
+                        @if (Model.FirstCharacterImage != null)
+                        {
+                            <img src="@Model.FirstCharacterImage.ImagePath"
+                                 alt="Character Image"
+                                 title="@Model.DessertCharacter?.CharacterName"
+                                 style="height: 40px; width: auto; border-radius: 5px;" />
+                        }
+                       
+                           
+                        
 
                         <!-- Unlink Character Form -->
                         <form method="POST" action="/DessertPage/UnlinkFromCharacter" style="display:inline;">
                             <input type="hidden" name="dessertId" value="@Model.Dessert.DessertId" />
-                            <input type="hidden" name="characterId" value="@Model.Dessert.CharacterDto.CharacterId" />
+                            <input type="hidden" name="characterId" value="@Model.DessertCharacter.CharacterId" />
                             <button type="submit" title="Unlink Character"
                                     style="background: none; border: none; color: #f44336; font-size: 18px; cursor: pointer;">
                                 ✕

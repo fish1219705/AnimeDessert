@@ -128,18 +128,27 @@ namespace AnimeDessert.Controllers
             ? await _characterService.FindCharacter(DessertDto.CharacterId.Value)
             : null;
 
+                IEnumerable<CharacterVersionDto>? characterVersions = null;
+                ImageDto? firstCharacterImage = null;
+
+                if (characterDto != null)
+                {
+                    // Get the character versions
+                    characterVersions = characterDto.CharacterVersionDtos;
+                    // Get the first image from the first version
+                    firstCharacterImage = characterDto.CharacterVersionDtos?.FirstOrDefault()?
+                        .ImageDtos?.FirstOrDefault();
+                }
+
                 DessertDetails DessertInfo = new DessertDetails()
                 {
                     Dessert = DessertDto,
                     DessertCharacter = characterDto, // Still set this if you use it elsewhere
-                    AllCharacters = allCharacters
+                    AllCharacters = allCharacters,
+                    CharacterVersionDtos = characterVersions,
+                    FirstCharacterImage = firstCharacterImage
                 };
 
-                // Populate Dessert.CharacterDto
-                if (characterDto != null)
-                {
-                    DessertInfo.Dessert.CharacterDto = characterDto;
-                }
 
                 return View(DessertInfo);
             }
