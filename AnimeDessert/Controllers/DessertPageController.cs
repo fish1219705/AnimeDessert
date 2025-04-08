@@ -110,12 +110,22 @@ namespace AnimeDessert.Controllers
             {
                 var allCharacters = await _characterService.ListCharacters(); // Ensure this method exists
                 // information which drives a dessert page
+                var characterDto = DessertDto.CharacterId.HasValue
+            ? await _characterService.FindCharacter(DessertDto.CharacterId.Value)
+            : null;
+
                 DessertDetails DessertInfo = new DessertDetails()
                 {
                     Dessert = DessertDto,
-                    DessertCharacter = DessertDto.CharacterId == null ? null : await _characterService.FindCharacter((int)DessertDto.CharacterId),
+                    DessertCharacter = characterDto, // Still set this if you use it elsewhere
                     AllCharacters = allCharacters
                 };
+
+                // Populate Dessert.CharacterDto
+                if (characterDto != null)
+                {
+                    DessertInfo.Dessert.CharacterDto = characterDto;
+                }
 
                 return View(DessertInfo);
             }
