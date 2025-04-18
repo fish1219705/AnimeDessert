@@ -28,9 +28,12 @@
     </div>
 
     <div class="form-row" style="margin-bottom: 20px;">
-        <label for="DessertId" style="font-weight: bold; color: #333;">Dessert ID:</label>
-        <input type="text" name="DessertId" id="DessertId"
-               style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc; font-size: 16px;" />
+        <label for="DessertId" style="font-weight: bold; color: #333;">Choose A Dessert:</label>
+        <select id="DessertId" name="DessertId">
+            
+        </select>
+        
+    
     </div>
 
     <div class="form-row" style="text-align: center; margin-top: 20px;">
@@ -38,3 +41,21 @@
                style="background-color: #4CAF50; color: white; border: none; padding: 10px 20px; font-size: 16px; border-radius: 5px; cursor: pointer;" />
     </div>
 </form>
+
+<script>
+    async function loadDesserts() {
+      const response = await fetch('/api/Dessert/List');
+      const desserts = await response.json();
+
+      const select = document.getElementById('DessertId');
+
+      desserts.forEach(dessert => {
+        const option = document.createElement('option');
+        option.value = dessert.dessertId;
+        option.text = dessert.dessertName;
+        select.appendChild(option);
+      });
+    }
+
+    window.onload = loadDesserts;
+</script>
