@@ -1,7 +1,74 @@
 ﻿@model Int32;
-
 @{
     ViewData["Title"] = "Home Page";
 }
 
-<h1 class="display-4 text-center">Welcome</h1>
+
+<style>
+    body {
+        background: linear-gradient(to bottom, #fff6e6, #ffe5cc);
+    }
+
+    .card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+        /* 簡單 fade-in 無 keyframe：靠 JS 加 class */
+        .card.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 0 25px rgba(255, 165, 0, 0.3);
+        }
+
+    .card-img-bottom:hover {
+        filter: brightness(1.05) blur(1px);
+        transform: scale(1.05);
+        transition: transform 0.3s ease, filter 0.3s ease;
+    }
+
+    h1, .lead {
+        color: #e67300;
+    }
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const card = document.querySelector(".card");
+        setTimeout(() => {
+            card.classList.add("show");
+        }, 200);
+    });
+</script>
+
+<div class="container py-5">
+    <h1 class="display-4 text-center mb-4">Welcome to AnimeDessert!</h1>
+    <p class="lead text-center mb-5">
+        What if anime heroes had their own desserts? Discover treats inspired by your favorite characters!
+    </p>
+
+    <div class="row justify-content-center">
+     
+        <div class="col-md-6">
+            <div class="card h-100 shadow-lg">
+                <img src="/images/naruto.jpg" class="card-img-top" alt="Naruto Uzumaki">
+                <div class="card-body text-center">
+                    <h3 class="card-title">Naruto Uzumaki</h3>
+                    <p class="card-text fs-5">
+                        🍜 <strong>Ramen Cheesecake</strong><br />
+                        Inspired by Naruto's love for ramen, this creamy cheesecake swirls orange and white just like his chakra!
+                    </p>
+                </div>
+                <img src="/images/ramen-cheesecake.jpg" class="card-img-bottom" alt="Ramen Cheesecake">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
