@@ -69,7 +69,7 @@
         <div style="margin-top: 20px; padding: 15px; background-color: #f2f2f2; border-radius: 8px;">
             <h3>Ingredients:</h3>
             <ul>
-                @foreach (var IngredientDto in Model.DessertIngredients ?? [])
+                @foreach (var IngredientDto in Model.DessertIngredients ?? new List<IngredientDto>())
                 {
                     <li style="margin-bottom: 10px;">
                         <a href="/IngredientPage/Details/@IngredientDto.IngredientId"
