@@ -46,29 +46,19 @@
             <div style="padding: 8px; background: #fff; border-radius: 5px; display: flex; justify-content: space-between; align-items: center;">
                 @if (Model.DessertCharacter != null)
                 {
-                    <div style="display: flex; align-items: center;">
-                        <a href="/CharacterPage/Details/@Model.DessertCharacter.CharacterId"
-                           style="color: #2196F3; text-decoration: none; font-weight: bold; margin-right: 10px;">
-                            @Model.DessertCharacter.CharacterName
-                        </a>
+                    <div style="position: relative; display: inline-block;">
+                        <img src="@Model.FirstCharacterImage.ImagePath"
+                             alt="Character Image"
+                             title="@Model.DessertCharacter?.CharacterName"
+                             style="height: 100px; width: auto; border-radius: 5px; display: block;" />
 
-                        @if (Model.FirstCharacterImage != null)
-                        {
-                            <img src="@Model.FirstCharacterImage.ImagePath"
-                                 alt="Character Image"
-                                 title="@Model.DessertCharacter?.CharacterName"
-                                 style="height: 40px; width: auto; border-radius: 5px;" />
-                        }
-                       
-                           
-                        
-
-                        <!-- Unlink Character Form -->
-                        <form method="POST" action="/DessertPage/UnlinkFromCharacter" style="display:inline;">
+                        <!-- Unlink Character Form with X button in corner -->
+                        <form method="POST"
+                              action="/DessertPage/UnlinkFromCharacter"
+                              style="position: absolute; top: 5px; right: 5px;">
                             <input type="hidden" name="dessertId" value="@Model.Dessert.DessertId" />
                             <input type="hidden" name="characterId" value="@Model.DessertCharacter.CharacterId" />
-                            <button type="submit" title="Unlink Character"
-                                    style="background: none; border: none; color: #f44336; font-size: 18px; cursor: pointer;">
+                            <button type="submit" title="Unlink Character" style="color: red; background: none;  width: 24px; height: 24px; font-weight: bold; font-size: 18px; line-height: 1; text-align: center; padding: 0; cursor: pointer;">
                                 ✕
                             </button>
                         </form>
