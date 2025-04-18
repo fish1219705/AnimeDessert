@@ -15,8 +15,8 @@ AnimeDessert is a web app built by ASP .NET Core 8 MVC with Entity Framework Cor
     - Add Images to Dessert function in Views
 
 - Peiyu Han
-    - Display Charater of Dessert in Dessert Detail Page
-    - Allow updating Character of Dessert in Dessert Edit Page
+    - Display Character of Dessert with first version first image in Dessert Detail Page
+    - Allow updating Character of Dessert in Dessert Edit Page, Link and Unlink Character with dessert with image showing.
 
 ## Features
 
@@ -47,6 +47,18 @@ AnimeDessert is a web app built by ASP .NET Core 8 MVC with Entity Framework Cor
     - There is a audio player for each Music you uploaded
     - File can be removed from the dropzone
     - There is a clear all button for removing all inputs
+
+- CRUD for Dessert Database
+    - Create Dessert, attach Images, Musics, and Characters to Anime
+    - Create Ingredient
+    - Create Review
+    - Create Instruction
+    - Read Dessert
+    - Read Ingredient
+    - Read Review
+    - Update 
+    - Delete 
+    - Delete link of 
  
 ## Tech Stack
 
