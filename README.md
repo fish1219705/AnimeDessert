@@ -15,8 +15,8 @@ AnimeDessert is a web app built by ASP .NET Core 8 MVC with Entity Framework Cor
     - Add Images to Dessert function in Views
 
 - Peiyu Han
-    - Display Charater of Dessert in Dessert Detail Page
-    - Allow updating Character of Dessert in Dessert Edit Page
+    - Display Character of Dessert with first version first image in Dessert Detail Page
+    - Allow updating Character of Dessert in Dessert Edit Page, Link and Unlink Character with dessert with image showing.
 
 ## Features
 
@@ -47,6 +47,19 @@ AnimeDessert is a web app built by ASP .NET Core 8 MVC with Entity Framework Cor
     - There is a audio player for each Music you uploaded
     - File can be removed from the dropzone
     - There is a clear all button for removing all inputs
+
+- CRUD for Dessert Database
+    - Create Dessert, attach Images, link and unlink with ingredient, link and unlink with Character
+    - Create Ingredient
+    - Create Review
+    - Create Instruction
+    - Read Dessert
+    - Read Ingredient
+    - Read Review
+    - Read Instruction
+    - Update Dessert and also change character linking
+    - Update Ingredient, Review, Instruction
+    - Delete Dessert, Ingredient, Review, Instruction
  
 ## Tech Stack
 
@@ -110,3 +123,43 @@ AnimeDessert is a web app built by ASP .NET Core 8 MVC with Entity Framework Cor
     - GET: /api/Staff/{id} ; Retrieve a Staff
     - PUT: /api/Staff/{id} ; Update a Staff
     - DELETE: /api/Staff/{id} ; Delete a Staff
+
+### Dessert
+    - GET：/api/Dessert/List
+    - POST：/api/Dessert/Add
+    - GET： /api/Dessert/Find/{id}
+    - PUT： /api/Dessert/Update/{id}
+    - DELETE： /api/Dessert/Delete/{id}
+    - GET：/api/Dessert/ListForIngredient/{id}
+    - POST： /api/Dessert/Link
+    - DELETE： /api/Dessert/Unlink
+    - GET: /api/Dessert/ListImages/{id}
+    - POST: /api/Dessert/AddImages/{id}
+    - DELETE: /api/Dessert/RemoveImages/{id}
+
+### Ingredient
+    - GET: /api/Ingredient/List
+    - POST: /api/Ingredient/Add
+    - GET: /api/Ingredient/Find/{id}
+    - PUT: /api/Ingredient/Update/{id}
+    - DELETE: /api/Ingredient/Delete/{id}
+    - GET: /api/Ingredient/ListForDessert/{id}
+    - POST: /api/Ingredient/Link
+    - DELETE: /api/Ingredient/Unlink
+
+### Review
+    - GET: /api/Review/List
+    - POST: /api/Review/Add
+    - GET: /api/Review/Find/{id}
+    - PUT: /api/Review/Update/{id}
+    - DELETE: /api/Review/Delete/{id}
+    - GET: /api/Review/ListForDessert/{id}
+
+### Instruction
+    - GET: /api/Instruction/List
+    - POST: /api/Instruction/Add
+    - GET: /api/Instruction/Find/{id}
+    - PUT: /api/Instruction/Update/{id}
+    - DELETE: /api/Instrucion/Delete/{id}
+
+
