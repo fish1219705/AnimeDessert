@@ -523,7 +523,7 @@ namespace AnimeDessert.Services
 
         public async Task<IEnumerable<DessertDto>> ListDessertsForCharacter(int id)
         {
-            // Find Desserts for Character {id}
+       
             List<Dessert> desserts = await _context.Desserts
                 .Where(d => d.CharacterId == id)
                 .Select(
@@ -538,7 +538,7 @@ namespace AnimeDessert.Services
                 )
                 .ToListAsync();
 
-            // Convert to Dtos
+     
             IEnumerable<DessertDto> dessertDtos = desserts.Select(
                 d => new DessertDto
                 {
@@ -564,7 +564,7 @@ namespace AnimeDessert.Services
 
             Dessert? dessert = await _context.Desserts.FindAsync(dessertId);
 
-            // Data must link to a valid entity
+      
             if (dessert == null || character == null)
             {
                 serviceResponse.Status = ServiceStatus.NotFound;
@@ -612,7 +612,7 @@ namespace AnimeDessert.Services
 
             Dessert? dessert = await _context.Desserts.FindAsync(dessertId);
 
-            // Data must link to a valid entity
+        
             if (dessert == null || character == null)
             {
                 serviceResponse.Status = ServiceStatus.NotFound;
