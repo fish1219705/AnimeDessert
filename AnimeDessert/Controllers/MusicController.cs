@@ -43,7 +43,7 @@ namespace AnimeDessert.Controllers
         /// </example>
         [HttpPost(template: "{id}/Singer")]
         [Consumes("application/json")]
-        [Authorize]
+        [Authorize(Roles = "Admin,AnimeAdmin")]
         public async Task<ActionResult> AddSingersToMusic(int id, [FromBody] AddSingersToMusicRequest request)
         {
             ServiceResponse response = await _musicService.AddSingersToMusic(id, request);
@@ -87,7 +87,7 @@ namespace AnimeDessert.Controllers
         /// </example>
         [HttpDelete(template: "{id}/Singer")]
         [Consumes("application/json")]
-        [Authorize]
+        [Authorize(Roles = "Admin,AnimeAdmin")]
         public async Task<ActionResult> RemoveSingersFromMusic(int id, [FromBody] RemoveSingersFromMusicRequest request)
         {
             ServiceResponse response = await _musicService.RemoveSingersFromMusic(id, request);

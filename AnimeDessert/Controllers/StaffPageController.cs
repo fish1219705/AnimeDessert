@@ -38,7 +38,7 @@ namespace AnimeDessert.Controllers
 
         // GET: Staff/New
         [HttpGet("New")]
-        [Authorize]
+        [Authorize(Roles = "Admin,AnimeAdmin")]
         public ActionResult New()
         {
             return View();
@@ -46,7 +46,7 @@ namespace AnimeDessert.Controllers
 
         // POST: Staff/Add
         [HttpPost("Add")]
-        [Authorize]
+        [Authorize(Roles = "Admin,AnimeAdmin")]
         public async Task<IActionResult> Add([FromForm] AddStaffRequest request)
         {
             (ServiceResponse response, StaffDto? staffDto) = await _staffService.AddStaff(request);
@@ -58,7 +58,7 @@ namespace AnimeDessert.Controllers
 
         // GET: Staff/{id}/Edit
         [HttpGet("{id}/Edit")]
-        [Authorize]
+        [Authorize(Roles = "Admin,AnimeAdmin")]
         public async Task<IActionResult> Edit(int id)
         {
             StaffDto? staffDto = await _staffService.FindStaff(id);
@@ -70,7 +70,7 @@ namespace AnimeDessert.Controllers
 
         // POST: Staff/{id}/Update
         [HttpPost("Staff/{id}/Update")]
-        [Authorize]
+        [Authorize(Roles = "Admin,AnimeAdmin")]
         public async Task<IActionResult> Update(int id, [FromForm] UpdateStaffRequest request)
         {
             ServiceResponse response = await _staffService.UpdateStaff(id, request);
@@ -82,7 +82,7 @@ namespace AnimeDessert.Controllers
 
         // GET: Staff/{id}/ConfirmDelete
         [HttpGet("Staff/{id}/ConfirmDelete")]
-        [Authorize]
+        [Authorize(Roles = "Admin,AnimeAdmin")]
         public async Task<IActionResult> ConfirmDelete(int id)
         {
             StaffDto? staffDto = await _staffService.FindStaff(id);
@@ -94,7 +94,7 @@ namespace AnimeDessert.Controllers
 
         // POST: Staff/{id}/Delete
         [HttpPost("Staff/{id}/Delete")]
-        [Authorize]
+        [Authorize(Roles = "Admin,AnimeAdmin")]
         public async Task<IActionResult> Delete(int id)
         {
             ServiceResponse response = await _staffService.DeleteStaff(id);

@@ -1,8 +1,7 @@
 ﻿using AnimeDessert.Interfaces;
-using AnimeDessert.Models.ViewModels;
 using AnimeDessert.Models;
+using AnimeDessert.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AnimeDessert.Controllers
@@ -55,7 +54,7 @@ namespace AnimeDessert.Controllers
         }
 
         // GET ReviewPage/New
-        [Authorize]
+        [Authorize(Roles = "Admin,DessertAdmin")]
         public ActionResult New()
         {
             return View();
@@ -64,7 +63,7 @@ namespace AnimeDessert.Controllers
 
         // POST ReviewPage/Add
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Admin,DessertAdmin")]
         public async Task<IActionResult> Add(ReviewDto ReviewDto)
         {
             ServiceResponse response = await _reviewService.AddReview(ReviewDto);
@@ -81,7 +80,7 @@ namespace AnimeDessert.Controllers
 
         //GET ReviewPage/Edit/{id}
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "Admin,DessertAdmin")]
         public async Task<IActionResult> Edit(int id)
         {
             ReviewDto? ReviewDto = await _reviewService.FindReview(id);
@@ -97,10 +96,10 @@ namespace AnimeDessert.Controllers
 
         //POST ReviewPage/Update/{id}
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Admin,DessertAdmin")]
         public async Task<IActionResult> Update(int id, ReviewDto ReviewDto, IFormFile ReviewPic)
         {
-           
+
 
             ServiceResponse response = await _reviewService.UpdateReview(ReviewDto);
 
@@ -116,7 +115,7 @@ namespace AnimeDessert.Controllers
 
         //GET ReviewPage/ConfirmDelete/{id}
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "Admin,DessertAdmin")]
         public async Task<IActionResult> ConfirmDelete(int id)
         {
             // Views/ReviewPage/ConfirmDelete.cshtml
@@ -128,7 +127,7 @@ namespace AnimeDessert.Controllers
 
         //POST ReviewPage/Delete/{id}
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Admin,DessertAdmin")]
         public async Task<IActionResult> Delete(int id)
         {
             ServiceResponse response = await _reviewService.DeleteReview(id);

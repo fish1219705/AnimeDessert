@@ -1,13 +1,6 @@
 ﻿using AnimeDessert.Interfaces;
 using AnimeDessert.Models;
-using AnimeDessert.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AnimeDessert.Controllers
@@ -90,7 +83,7 @@ namespace AnimeDessert.Controllers
         /// 
         /// </example>
         [HttpPut(template: "Update/{id}")]
-        [Authorize]
+        [Authorize(Roles = "Admin,DessertAdmin")]
         public async Task<ActionResult> UpdateInstruction(int id, InstructionDto instructionDto)
         {
             // {id} in URL must match OrderItemId in POST Body
@@ -130,7 +123,7 @@ namespace AnimeDessert.Controllers
         /// </example>
 
         [HttpPost(template: "Add")]
-        [Authorize]
+        [Authorize(Roles = "Admin,DessertAdmin")]
         public async Task<ActionResult<Instruction>> AddInstruction(InstructionDto instructionDto)
         {
             ServiceResponse response = await _instructionService.AddInstruction(instructionDto);
@@ -162,7 +155,7 @@ namespace AnimeDessert.Controllers
         /// 
         /// </example>
         [HttpDelete("/Delete/{id}")]
-        [Authorize]
+        [Authorize(Roles = "Admin,DessertAdmin")]
         public async Task<ActionResult> DeleteInstruction(int id)
         {
             ServiceResponse response = await _instructionService.DeleteInstruction(id);

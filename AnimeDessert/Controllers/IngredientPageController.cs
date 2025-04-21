@@ -1,8 +1,7 @@
 ﻿using AnimeDessert.Interfaces;
-using AnimeDessert.Models.ViewModels;
 using AnimeDessert.Models;
+using AnimeDessert.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AnimeDessert.Controllers
@@ -64,7 +63,7 @@ namespace AnimeDessert.Controllers
         }
 
         // GET IngredientPage/New
-        [Authorize]
+        [Authorize(Roles = "Admin,DessertAdmin")]
         public ActionResult New()
         {
             return View();
@@ -73,7 +72,7 @@ namespace AnimeDessert.Controllers
 
         // POST IngredientPage/Add
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Admin,DessertAdmin")]
         public async Task<IActionResult> Add(IngredientDto IngredientDto)
         {
             ServiceResponse response = await _ingredientService.AddIngredient(IngredientDto);
@@ -90,7 +89,7 @@ namespace AnimeDessert.Controllers
 
         //GET IngredientPage/Edit/{id}
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "Admin,DessertAdmin")]
         public async Task<IActionResult> Edit(int id)
         {
             IngredientDto? IngredientDto = await _ingredientService.FindIngredient(id);
@@ -106,7 +105,7 @@ namespace AnimeDessert.Controllers
 
         //POST IngredientPage/Update/{id}
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Admin,DessertAdmin")]
         public async Task<IActionResult> Update(int id, IngredientDto IngredientDto)
         {
             ServiceResponse response = await _ingredientService.UpdateIngredient(IngredientDto);
@@ -123,7 +122,7 @@ namespace AnimeDessert.Controllers
 
         //GET IngredientPage/ConfirmDelete/{id}
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "Admin,DessertAdmin")]
         public async Task<IActionResult> ConfirmDelete(int id)
         {
             // Views/IngredientPage/ConfirmDelete.cshtml
@@ -135,7 +134,7 @@ namespace AnimeDessert.Controllers
 
         //POST IngredientPage/Delete/{id}
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Admin,DessertAdmin")]
         public async Task<IActionResult> Delete(int id)
         {
             ServiceResponse response = await _ingredientService.DeleteIngredient(id);
@@ -153,7 +152,7 @@ namespace AnimeDessert.Controllers
         //POST IngredientPage/LinkToDessert
         //DATA: dessertId={dessertId}&ingredientId={ingredientId}
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Admin,DessertAdmin")]
         public async Task<IActionResult> LinkToDessert([FromForm] int ingredientId, [FromForm] int dessertId)
         {
             await _dessertService.LinkDessertToIngredient(dessertId, ingredientId);
@@ -164,7 +163,7 @@ namespace AnimeDessert.Controllers
         //POST IngredientPage/UnlinkFromDessert
         //DATA: dessertId={dessertId}&ingredientId={ingredientId}
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Admin,DessertAdmin")]
         public async Task<IActionResult> UnlinkFromDessert([FromForm] int ingredientId, [FromForm] int dessertId)
         {
             await _dessertService.UnlinkDessertFromIngredient(dessertId, ingredientId);

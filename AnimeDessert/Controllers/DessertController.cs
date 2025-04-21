@@ -2,7 +2,6 @@
 using AnimeDessert.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace AnimeDessert.Controllers
 {
@@ -88,7 +87,7 @@ namespace AnimeDessert.Controllers
         /// Response Code: 204 No Content
         /// </example>
         [HttpPut(template: "Update/{id}")]
-        [Authorize]
+        [Authorize(Roles = "Admin,DessertAdmin")]
         public async Task<ActionResult> UpdateDessert(int id, DessertDto DessertDto)
         {
             // {id} in URL must match DessertId in POST Body
@@ -134,7 +133,7 @@ namespace AnimeDessert.Controllers
         /// Response Headers: Location: api/Dessert/Find/{DessertId}
         /// </example>
         [HttpPost(template: "Add")]
-        [Authorize]
+        [Authorize(Roles = "Admin,DessertAdmin")]
         public async Task<ActionResult<Dessert>> AddDessert(DessertDto DessertDto)
         {
             ServiceResponse response = await _dessertService.AddDessert(DessertDto);
@@ -168,7 +167,7 @@ namespace AnimeDessert.Controllers
         /// Response Code: 204 No Content
         /// </example>
         [HttpDelete("Delete/{id}")]
-        [Authorize]
+        [Authorize(Roles = "Admin,DessertAdmin")]
         public async Task<ActionResult> DeleteDessert(int id)
         {
             ServiceResponse response = await _dessertService.DeleteDessert(id);
@@ -226,7 +225,7 @@ namespace AnimeDessert.Controllers
         /// Response Code: 204 No Content
         /// </example>
         [HttpDelete("Unlink")]
-        [Authorize]
+        [Authorize(Roles = "Admin,DessertAdmin")]
         public async Task<ActionResult> Unlink(int dessertId, int ingredientId)
         {
             ServiceResponse response = await _dessertService.UnlinkDessertFromIngredient(dessertId, ingredientId);
@@ -263,7 +262,7 @@ namespace AnimeDessert.Controllers
         /// Response Code: 204 No Content
         /// </example>
         [HttpPost("Link")]
-        [Authorize]
+        [Authorize(Roles = "Admin,DessertAdmin")]
         public async Task<ActionResult> Link(int dessertId, int ingredientId)
         {
             ServiceResponse response = await _dessertService.LinkDessertToIngredient(dessertId, ingredientId);
@@ -322,7 +321,7 @@ namespace AnimeDessert.Controllers
         /// </example>
         [HttpPost(template: "AddImages/{id}")]
         [Consumes("multipart/form-data")]
-        [Authorize]
+        [Authorize(Roles = "Admin,DessertAdmin")]
         public async Task<ActionResult> AddImagesToDessert(int id, [FromForm] AddImagesToDessertRequest request)
         {
             ServiceResponse response = await _dessertService.AddImagesToDessert(id, request);
@@ -366,7 +365,7 @@ namespace AnimeDessert.Controllers
         /// </example>
         [HttpDelete(template: "RemoveImages/{id}")]
         [Consumes("application/json")]
-        [Authorize]
+        [Authorize(Roles = "Admin,DessertAdmin")]
         public async Task<ActionResult> RemoveImagesFromDessert(int id, [FromBody] RemoveImagesFromDessertRequest request)
         {
             ServiceResponse response = await _dessertService.RemoveImagesFromDessert(id, request);
@@ -383,7 +382,7 @@ namespace AnimeDessert.Controllers
                     // Status = Deleted
                     return Ok(response.Messages);
             }
-        
+
         }
     }
 }

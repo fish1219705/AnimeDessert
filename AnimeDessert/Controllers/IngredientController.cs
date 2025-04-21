@@ -1,15 +1,7 @@
 ﻿using AnimeDessert.Interfaces;
 using AnimeDessert.Models;
-using AnimeDessert.Data;
-using AnimeDessert.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 
 namespace AnimeDessert.Controllers
@@ -97,7 +89,7 @@ namespace AnimeDessert.Controllers
         /// Response Code: 204 No Content
         /// </example>
         [HttpPut(template: "Update/{id}")]
-        [Authorize]
+        [Authorize(Roles = "Admin,DessertAdmin")]
         public async Task<ActionResult> UpdateIngredient(int id, IngredientDto IngredientDto)
         {
             // {id} in URL must match IngredientId in POST Body
@@ -143,7 +135,7 @@ namespace AnimeDessert.Controllers
         /// Response Headers: Location: api/Ingredient/Find/{IngredientId}
         /// </example>
         [HttpPost(template: "Add")]
-        [Authorize]
+        [Authorize(Roles = "Admin,DessertAdmin")]
         public async Task<ActionResult<Ingredient>> AddIngredient(IngredientDto IngredientDto)
         {
             ServiceResponse response = await _ingredientService.AddIngredient(IngredientDto);
@@ -176,7 +168,7 @@ namespace AnimeDessert.Controllers
         /// Response Code: 204 No Content
         /// </example>
         [HttpDelete("Delete/{id}")]
-        [Authorize]
+        [Authorize(Roles = "Admin,DessertAdmin")]
         public async Task<ActionResult> DeleteIngredient(int id)
         {
             ServiceResponse response = await _ingredientService.DeleteIngredient(id);
@@ -229,7 +221,7 @@ namespace AnimeDessert.Controllers
         /// Response Code: 204 No Content
         /// </example>
         [HttpDelete("Unlink")]
-        [Authorize]
+        [Authorize(Roles = "Admin,DessertAdmin")]
         public async Task<ActionResult> Unlink(int ingredientId, int dessertId)
         {
             ServiceResponse response = await _ingredientService.UnlinkIngredientFromDessert(ingredientId, dessertId);
@@ -263,7 +255,7 @@ namespace AnimeDessert.Controllers
         /// Response Code: 204 No Content
         /// </example>
         [HttpPost("Link")]
-        [Authorize]
+        [Authorize(Roles = "Admin,DessertAdmin")]
         public async Task<ActionResult> Link(int ingredientId, int dessertId)
         {
             ServiceResponse response = await _ingredientService.LinkIngredientToDessert(ingredientId, dessertId);

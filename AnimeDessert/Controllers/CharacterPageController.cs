@@ -44,7 +44,7 @@ namespace AnimeDessert.Controllers
 
         // GET: Character/New
         [HttpGet("New")]
-        [Authorize]
+        [Authorize(Roles = "Admin,AnimeAdmin")]
         public ActionResult New()
         {
             return View();
@@ -53,7 +53,7 @@ namespace AnimeDessert.Controllers
         // POST: Character/Add
         [HttpPost("Add")]
         [Consumes("multipart/form-data")]
-        [Authorize]
+        [Authorize(Roles = "Admin,AnimeAdmin")]
         public async Task<IActionResult> Add([FromForm] AddCharacterRequest request)
         {
             (ServiceResponse response, CharacterDto? characterDto) = await _characterService.AddCharacter(request);
@@ -65,7 +65,7 @@ namespace AnimeDessert.Controllers
 
         // GET: Character/{id}/Edit
         [HttpGet("{id}/Edit")]
-        [Authorize]
+        [Authorize(Roles = "Admin,AnimeAdmin")]
         public async Task<IActionResult> Edit(int id)
         {
             CharacterDto? characterDto = await _characterService.FindCharacter(id);
@@ -77,7 +77,7 @@ namespace AnimeDessert.Controllers
 
         // POST: Character/{id}/Update
         [HttpPost("{id}/Update")]
-        [Authorize]
+        [Authorize(Roles = "Admin,AnimeAdmin")]
         public async Task<IActionResult> Update(int id, [FromForm] UpdateCharacterRequest request)
         {
             ServiceResponse response = await _characterService.UpdateCharacter(id, request);
@@ -89,7 +89,7 @@ namespace AnimeDessert.Controllers
 
         // GET: Character/{id}/ConfirmDelete
         [HttpGet("{id}/ConfirmDelete")]
-        [Authorize]
+        [Authorize(Roles = "Admin,AnimeAdmin")]
         public async Task<IActionResult> ConfirmDelete(int id)
         {
             CharacterDto? characterDto = await _characterService.FindCharacter(id);
@@ -101,7 +101,7 @@ namespace AnimeDessert.Controllers
 
         // POST: Character/{id}/Delete
         [HttpPost("{id}/Delete")]
-        [Authorize]
+        [Authorize(Roles = "Admin,AnimeAdmin")]
         public async Task<IActionResult> Delete(int id)
         {
             ServiceResponse response = await _characterService.DeleteCharacter(id);
@@ -113,7 +113,7 @@ namespace AnimeDessert.Controllers
 
         // GET: Character/{id}/NewVersions
         [HttpGet("{id}/NewVersions")]
-        [Authorize]
+        [Authorize(Roles = "Admin,AnimeAdmin")]
         public async Task<IActionResult> NewVersions(int id)
         {
             CharacterDto? characterDto = await _characterService.FindCharacter(id);
@@ -126,7 +126,7 @@ namespace AnimeDessert.Controllers
         // POST: Character/{id}/AddVersions
         [HttpPost("{id}/AddVersions")]
         [Consumes("multipart/form-data")]
-        [Authorize]
+        [Authorize(Roles = "Admin,AnimeAdmin")]
         public async Task<IActionResult> AddVersions(int id, [FromForm] AddVersionToCharacterRequest request)
         {
             (ServiceResponse response, CharacterVersionDto? characterVersionDto) = await _characterService.AddVersionToCharacter(id, request);
@@ -138,7 +138,7 @@ namespace AnimeDessert.Controllers
 
         // POST: Character/{id}/RemoveVersions
         [HttpPost("{id}/RemoveVersions")]
-        [Authorize]
+        [Authorize(Roles = "Admin,AnimeAdmin")]
         public async Task<IActionResult> RemoveVersions(int id, [FromForm] RemoveVersionsFromCharacterRequest request)
         {
             ServiceResponse response = await _characterService.RemoveVersionsFromCharacter(id, request);

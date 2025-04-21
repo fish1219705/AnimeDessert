@@ -34,7 +34,7 @@ namespace AnimeDessert.Controllers
 
         //GET InstructionPage/Edit/{id}
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "Admin,DessertAdmin")]
         public async Task<IActionResult> Edit(int id)
         {
             InstructionDto? InstructionDto = await _instructionService.FindInstruction(id);
@@ -59,7 +59,7 @@ namespace AnimeDessert.Controllers
 
         //POST InstructionPage/Update/{id}
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Admin,DessertAdmin")]
         public async Task<IActionResult> Update(int id, InstructionDto InstructionDto)
         {
             ServiceResponse response = await _instructionService.UpdateInstruction(InstructionDto);
@@ -75,7 +75,7 @@ namespace AnimeDessert.Controllers
         }
 
         // GET InstructionPage/New
-        [Authorize]
+        [Authorize(Roles = "Admin,DessertAdmin")]
         public async Task<IActionResult> New()
         {
 
@@ -94,7 +94,7 @@ namespace AnimeDessert.Controllers
 
         // POST InstructionPage/Add
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Admin,DessertAdmin")]
         public async Task<IActionResult> Add(InstructionDto InstructionDto)
         {
             ServiceResponse response = await _instructionService.AddInstruction(InstructionDto);
@@ -158,7 +158,7 @@ namespace AnimeDessert.Controllers
 
         //GET InstructionPage/ConfirmDelete/{id}
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "Admin,DessertAdmin")]
         public async Task<IActionResult> ConfirmDelete(int id)
         {
             InstructionDto? InstructionDto = await _instructionService.FindInstruction(id);
@@ -174,7 +174,7 @@ namespace AnimeDessert.Controllers
 
         //POST InstructionPage/Delete/{id}
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Admin,DessertAdmin")]
         public async Task<IActionResult> Delete(int id)
         {
             ServiceResponse response = await _instructionService.DeleteInstruction(id);

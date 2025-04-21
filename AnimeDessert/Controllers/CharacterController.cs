@@ -1,6 +1,5 @@
 ﻿using AnimeDessert.Interfaces;
 using AnimeDessert.Models;
-using AnimeDessert.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -80,7 +79,7 @@ namespace AnimeDessert.Controllers
         /// </example>
         [HttpPut(template: "{id}")]
         [Consumes("application/json")]
-        [Authorize]
+        [Authorize(Roles = "Admin,AnimeAdmin")]
         public async Task<ActionResult> UpdateCharacter(int id, [FromBody] UpdateCharacterRequest request)
         {
             ServiceResponse response = await _characterService.UpdateCharacter(id, request);
@@ -124,7 +123,7 @@ namespace AnimeDessert.Controllers
         /// </example>
         [HttpPost]
         [Consumes("multipart/form-data")]
-        [Authorize]
+        [Authorize(Roles = "Admin,AnimeAdmin")]
         public async Task<ActionResult> AddCharacter([FromForm] AddCharacterRequest request)
         {
             (ServiceResponse response, CharacterDto? characterDto) = await _characterService.AddCharacter(request);
@@ -158,7 +157,7 @@ namespace AnimeDessert.Controllers
         /// Response Code: 204 No Content
         /// </example>
         [HttpDelete(template: "{id}")]
-        [Authorize]
+        [Authorize(Roles = "Admin,AnimeAdmin")]
         public async Task<ActionResult> DeleteCharacter(int id)
         {
             ServiceResponse response = await _characterService.DeleteCharacter(id);
@@ -203,7 +202,7 @@ namespace AnimeDessert.Controllers
         /// </example>
         [HttpPost(template: "{id}/Version")]
         [Consumes("multipart/form-data")]
-        [Authorize]
+        [Authorize(Roles = "Admin,AnimeAdmin")]
         public async Task<ActionResult> AddVersionToCharacter(int id, [FromForm] AddVersionToCharacterRequest request)
         {
             (ServiceResponse response, CharacterVersionDto? characterVersionDto) = await _characterService.AddVersionToCharacter(id, request);
@@ -249,7 +248,7 @@ namespace AnimeDessert.Controllers
         /// </example>
         [HttpDelete(template: "{id}/Version")]
         [Consumes("application/json")]
-        [Authorize]
+        [Authorize(Roles = "Admin,AnimeAdmin")]
         public async Task<ActionResult> RemoveVersionsFromCharacter(int id, [FromBody] RemoveVersionsFromCharacterRequest request)
         {
             ServiceResponse response = await _characterService.RemoveVersionsFromCharacter(id, request);
@@ -304,7 +303,7 @@ namespace AnimeDessert.Controllers
         /// Response Code: 204 No Content
         /// </example>
         [HttpPost("Link")]
-        [Authorize]
+        [Authorize(Roles = "Admin,AnimeAdmin,DessertAdmin")]
         public async Task<ActionResult> LinkCharacter(int characterId, int dessertId)
         {
             ServiceResponse response = await _characterService.LinkCharacterToDessert(characterId, dessertId);
@@ -341,7 +340,7 @@ namespace AnimeDessert.Controllers
         /// Response Code: 204 No Content
         /// </example>
         [HttpDelete("Unlink")]
-        [Authorize]
+        [Authorize(Roles = "Admin,AnimeAdmin,DessertAdmin")]
         public async Task<ActionResult> UnlinkCharacter(int characterId, int dessertId)
         {
             ServiceResponse response = await _characterService.UnlinkCharacterFromDessert(characterId, dessertId);

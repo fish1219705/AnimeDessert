@@ -68,25 +68,25 @@ namespace AnimeDessert.Controllers
                 .ImageDtos?
                 .FirstOrDefault();
             }
-       
-                // information which drives a dessert page
-                DessertDetails DessertInfo = new DessertDetails()
-                {
-                    Dessert = DessertDto,
-                    DessertIngredients = AssociatedIngredients,
-                    AllIngredients = Ingredients,
-                    DessertReviews = AssociatedReviews,
-                    DessertInstructions = Instructions,
-                    DessertImages = Images,
-                    DessertCharacter = DessertDto.CharacterId == null ? null : await _characterService.FindCharacter((int)DessertDto.CharacterId),
-                    CharacterVersionDtos = characterVersions,
-                    FirstCharacterImage = firstCharacterImage
-                };
-                return View(DessertInfo);
-            }
-        
+
+            // information which drives a dessert page
+            DessertDetails DessertInfo = new DessertDetails()
+            {
+                Dessert = DessertDto,
+                DessertIngredients = AssociatedIngredients,
+                AllIngredients = Ingredients,
+                DessertReviews = AssociatedReviews,
+                DessertInstructions = Instructions,
+                DessertImages = Images,
+                DessertCharacter = DessertDto.CharacterId == null ? null : await _characterService.FindCharacter((int)DessertDto.CharacterId),
+                CharacterVersionDtos = characterVersions,
+                FirstCharacterImage = firstCharacterImage
+            };
+            return View(DessertInfo);
+        }
+
         // GET DessertPage/New
-        [Authorize]
+        [Authorize(Roles = "Admin,DessertAdmin")]
         public ActionResult New()
         {
             return View();
@@ -94,7 +94,7 @@ namespace AnimeDessert.Controllers
 
         // POST DessertPage/Add
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Admin,DessertAdmin")]
         public async Task<IActionResult> Add(DessertDto DessertDto)
         {
             ServiceResponse response = await _dessertService.AddDessert(DessertDto);
@@ -111,7 +111,7 @@ namespace AnimeDessert.Controllers
 
         //GET DessertPage/Edit/{id}
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "Admin,DessertAdmin")]
         public async Task<IActionResult> Edit(int id)
         {
             DessertDto? DessertDto = await _dessertService.FindDessert(id);
@@ -156,7 +156,7 @@ namespace AnimeDessert.Controllers
 
         //POST DessertPage/Update/{id}
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Admin,DessertAdmin")]
         public async Task<IActionResult> Update(int id, DessertDto DessertDto)
         {
             ServiceResponse response = await _dessertService.UpdateDessert(DessertDto);
@@ -173,7 +173,7 @@ namespace AnimeDessert.Controllers
 
         //GET DessertPage/ConfirmDelete/{id}
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "Admin,DessertAdmin")]
         public async Task<IActionResult> ConfirmDelete(int id)
         {
             DessertDto? DessertDto = await _dessertService.FindDessert(id);
@@ -189,7 +189,7 @@ namespace AnimeDessert.Controllers
 
         //POST DessertPage/Delete/{id}
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Admin,DessertAdmin")]
         public async Task<IActionResult> Delete(int id)
         {
             ServiceResponse response = await _dessertService.DeleteDessert(id);
@@ -206,7 +206,7 @@ namespace AnimeDessert.Controllers
         //POST DessertPage/LinkToIngredient
         //DATA: ingredientId={ingredientId}&dessertId={dessertId}
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Admin,DessertAdmin")]
         public async Task<IActionResult> LinkToIngredient([FromForm] int dessertId, [FromForm] int ingredientId)
         {
             await _ingredientService.LinkIngredientToDessert(ingredientId, dessertId);
@@ -217,7 +217,7 @@ namespace AnimeDessert.Controllers
         //POST DessertPage/UnlinkFromIngredient
         //DATA: ingredientId={ingredientId}&dessertId={dessertId}
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Admin,DessertAdmin")]
         public async Task<IActionResult> UnlinkFromIngredient([FromForm] int dessertId, [FromForm] int ingredientId)
         {
             await _ingredientService.UnlinkIngredientFromDessert(ingredientId, dessertId);
@@ -227,7 +227,7 @@ namespace AnimeDessert.Controllers
 
         // GET: DessertPage/NewImages/{id}
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "Admin,DessertAdmin")]
         public async Task<IActionResult> NewImages(int id)
         {
             DessertDto? dessertDto = await _dessertService.FindDessert(id);
@@ -240,7 +240,7 @@ namespace AnimeDessert.Controllers
         // POST: DessertPage/AddImages/{id}
         [HttpPost]
         [Consumes("multipart/form-data")]
-        [Authorize]
+        [Authorize(Roles = "Admin,DessertAdmin")]
         public async Task<IActionResult> AddImages(int id, [FromForm] AddImagesToDessertRequest request)
         {
             ServiceResponse response = await _dessertService.AddImagesToDessert(id, request);
@@ -252,7 +252,7 @@ namespace AnimeDessert.Controllers
 
         // POST: DessertPage/RemoveImages/{id}
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Admin,DessertAdmin")]
         public async Task<IActionResult> RemoveImages(int id, [FromForm] RemoveImagesFromDessertRequest request)
         {
             ServiceResponse response = await _dessertService.RemoveImagesFromDessert(id, request);
@@ -265,7 +265,7 @@ namespace AnimeDessert.Controllers
         //POST DessertPage/LinkToCharacter
         //DATA: characterId={characterId}&dessertId={dessertId}
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Admin,DessertAdmin")]
         public async Task<IActionResult> LinkToCharacter([FromForm] int dessertId, [FromForm] int characterId)
         {
             await _characterService.LinkCharacterToDessert(characterId, dessertId);
@@ -276,7 +276,7 @@ namespace AnimeDessert.Controllers
         //POST DessertPage/UnlinkFromCharacter
         //DATA: characterId={characterId}&dessertId={dessertId}
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Admin,DessertAdmin")]
         public async Task<IActionResult> UnlinkFromCharacter([FromForm] int dessertId, [FromForm] int characterId)
         {
             await _characterService.UnlinkCharacterFromDessert(characterId, dessertId);
@@ -286,7 +286,7 @@ namespace AnimeDessert.Controllers
 
         //// POST DessertPage/LinkToCharacter
         //[HttpPost]
-        //[Authorize]
+        //[Authorize(Roles = "Admin,DessertAdmin")]
         //public async Task<IActionResult> LinkToCharacter([FromForm] int dessertId, [FromForm] int characterId)
         //{
         //    await _characterService.LinkCharacterToDessert(characterId, dessertId);
@@ -295,7 +295,7 @@ namespace AnimeDessert.Controllers
 
         //// POST DessertPage/UnlinkFromCharacter
         //[HttpPost]
-        //[Authorize]
+        //[Authorize(Roles = "Admin,DessertAdmin")]
         //public async Task<IActionResult> UnlinkFromCharacter([FromForm] int dessertId, [FromForm] int characterId)
         //{
         //    await _characterService.UnlinkCharacterFromDessert(characterId, dessertId);

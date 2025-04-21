@@ -30,7 +30,7 @@ namespace AnimeDessert.Controllers
 
         // GET: CharacterVersion/{id}/Edit
         [HttpGet("{id}/Edit")]
-        [Authorize]
+        [Authorize(Roles = "Admin,AnimeAdmin")]
         public async Task<IActionResult> Edit(int id)
         {
             CharacterVersionDto? characterVersionDto = await _characterVersionService.FindCharacterVersion(id);
@@ -42,7 +42,7 @@ namespace AnimeDessert.Controllers
 
         // POST: CharacterVersion/{id}/Update
         [HttpPost("{id}/Update")]
-        [Authorize]
+        [Authorize(Roles = "Admin,AnimeAdmin")]
         public async Task<IActionResult> Update(int id, [FromForm] UpdateCharacterVersionRequest request)
         {
             ServiceResponse response = await _characterVersionService.UpdateCharacterVersion(id, request);
@@ -54,7 +54,7 @@ namespace AnimeDessert.Controllers
 
         // GET: CharacterVersion/{id}/NewImages
         [HttpGet("{id}/NewImages")]
-        [Authorize]
+        [Authorize(Roles = "Admin,AnimeAdmin")]
         public async Task<IActionResult> NewImages(int id)
         {
             CharacterVersionDto? characterVersionDto = await _characterVersionService.FindCharacterVersion(id);
@@ -67,7 +67,7 @@ namespace AnimeDessert.Controllers
         // POST: CharacterVersion/{id}/AddImages
         [HttpPost("{id}/AddImages")]
         [Consumes("multipart/form-data")]
-        [Authorize]
+        [Authorize(Roles = "Admin,AnimeAdmin")]
         public async Task<IActionResult> AddImages(int id, [FromForm] AddImagesToCharacterVersionRequest request)
         {
             ServiceResponse response = await _characterVersionService.AddImagesToCharacterVersion(id, request);
@@ -79,7 +79,7 @@ namespace AnimeDessert.Controllers
 
         // POST: CharacterVersion/{id}/RemoveImages
         [HttpPost("{id}/RemoveImages")]
-        [Authorize]
+        [Authorize(Roles = "Admin,AnimeAdmin")]
         public async Task<IActionResult> RemoveImages(int id, [FromForm] RemoveImagesFromCharacterVersionRequest request)
         {
             ServiceResponse response = await _characterVersionService.RemoveImagesFromCharacterVersion(id, request);
@@ -91,7 +91,7 @@ namespace AnimeDessert.Controllers
 
         // GET: CharacterVersion/{id}/NewVoiceActors
         [HttpGet("{id}/NewVoiceActors")]
-        [Authorize]
+        [Authorize(Roles = "Admin,AnimeAdmin")]
         public async Task<IActionResult> NewVoiceActors(int id)
         {
             CharacterVersionDto? characterVersionDto = await _characterVersionService.FindCharacterVersion(id);
@@ -104,7 +104,7 @@ namespace AnimeDessert.Controllers
 
         // POST: CharacterVersion/{id}/AddVoiceActors
         [HttpPost("{id}/AddVoiceActors")]
-        [Authorize]
+        [Authorize(Roles = "Admin,AnimeAdmin")]
         public async Task<IActionResult> AddVoiceActors(int id, [FromForm] AddVoiceActorsToCharacterVersionRequest request)
         {
             ServiceResponse response = await _characterVersionService.AddVoiceActorsToCharacterVersion(id, request);
@@ -116,7 +116,7 @@ namespace AnimeDessert.Controllers
 
         // POST: CharacterVersion/{id}/RemoveVoiceActors
         [HttpPost("{id}/RemoveVoiceActors")]
-        [Authorize]
+        [Authorize(Roles = "Admin,AnimeAdmin")]
         public async Task<IActionResult> RemoveVoiceActors(int id, [FromForm] RemoveVoiceActorsFromCharacterVersionRequest request)
         {
             ServiceResponse response = await _characterVersionService.RemoveVoiceActorsFromCharacterVersion(id, request);

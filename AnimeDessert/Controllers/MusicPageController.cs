@@ -30,7 +30,7 @@ namespace AnimeDessert.Controllers
 
         // GET: Music/{id}/NewSingers
         [HttpGet("{id}/NewSingers")]
-        [Authorize]
+        [Authorize(Roles = "Admin,AnimeAdmin")]
         public async Task<IActionResult> NewSingers(int id)
         {
             MusicDto? musicDto = await _musicService.FindMusic(id);
@@ -43,7 +43,7 @@ namespace AnimeDessert.Controllers
 
         // POST: Music/{id}/AddSingers
         [HttpPost("{id}/AddSingers")]
-        [Authorize]
+        [Authorize(Roles = "Admin,AnimeAdmin")]
         public async Task<IActionResult> AddSingers(int id, [FromForm] AddSingersToMusicRequest request)
         {
             ServiceResponse response = await _musicService.AddSingersToMusic(id, request);
@@ -55,7 +55,7 @@ namespace AnimeDessert.Controllers
 
         // POST: Music/{id}/RemoveSingers
         [HttpPost("{id}/RemoveSingers")]
-        [Authorize]
+        [Authorize(Roles = "Admin,AnimeAdmin")]
         public async Task<IActionResult> RemoveSingers(int id, [FromForm] RemoveSingersFromMusicRequest request)
         {
             ServiceResponse response = await _musicService.RemoveSingersFromMusic(id, request);

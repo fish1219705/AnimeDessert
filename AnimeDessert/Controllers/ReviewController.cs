@@ -1,14 +1,6 @@
 ﻿using AnimeDessert.Interfaces;
 using AnimeDessert.Models;
-using AnimeDessert.Services;
-using AnimeDessert.Data;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AnimeDessert.Controllers
@@ -89,7 +81,7 @@ namespace AnimeDessert.Controllers
         /// 204 No Content
         /// </returns>
         [HttpPut(template: "Update/{id}")]
-        [Authorize]
+        [Authorize(Roles = "Admin,DessertAdmin")]
         public async Task<ActionResult> UpdateReview(int id, ReviewDto reviewDto)
         {
             // {id} in URL must match ReviewId in POST Body
@@ -132,7 +124,7 @@ namespace AnimeDessert.Controllers
         /// POST api/Review/Add
         /// </example>
         [HttpPost(template: "Add")]
-        [Authorize]
+        [Authorize(Roles = "Admin,DessertAdmin")]
         public async Task<ActionResult<Review>> AddReview(ReviewDto reviewDto)
         {
             ServiceResponse response = await _reviewService.AddReview(reviewDto);
@@ -160,7 +152,7 @@ namespace AnimeDessert.Controllers
         /// 404 Not Found
         /// </returns>
         [HttpDelete("Delete/{id}")]
-        [Authorize]
+        [Authorize(Roles = "Admin,DessertAdmin")]
         public async Task<ActionResult> DeleteReview(int id)
         {
             ServiceResponse response = await _reviewService.DeleteReview(id);

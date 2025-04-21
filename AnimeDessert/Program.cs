@@ -13,7 +13,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 
@@ -68,5 +69,35 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
+
+using (var scope = app.Services.CreateScope())
+{
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    var roles = new[] { "Admin", "AnimeAdmin", "DessertAdmin", "User" };
+
+    foreach (var role in roles)
+    {
+        if (!await roleManager.RoleExistsAsync(role))
+        {
+            await roleManager.CreateAsync(new IdentityRole(role));
+        }
+    }
+
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+    var credentials = new[] { new[] { "adminuser@gmail.com", "Adminuser1`", "Admin" }, new[] { "animeadmin@gmail.com", "Animeadmin1`", "AnimeAdmin" }, new[] { "dessertadmin@gmail.com", "Dessertadmin1`", "DessertAdmin" }, new[] { "testuser@gmail.com", "Testuser1`", "User" } };
+
+    foreach (var credential in credentials)
+    {
+        if (await userManager.FindByEmailAsync(credential[0]) == null)
+        {
+            var user = new IdentityUser();
+            user.UserName = credential[0];
+            user.Email = credential[0];
+
+            await userManager.CreateAsync(user, credential[1]);
+            await userManager.AddToRoleAsync(user, credential[2]);
+        }
+    }
+}
 
 app.Run();
