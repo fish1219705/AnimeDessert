@@ -13,6 +13,7 @@ AnimeDessert is a web app built by ASP .NET Core 8 MVC with Entity Framework Cor
     - Display Desserts of Character in Character Detail Page
     - Display Images of Dessert in Dessert Detail Page with delete buttons
     - Add Images to Dessert function in Views
+    - Add role based access
 
 - Peiyu Han
     - Display Character of Dessert with first version first image in Dessert Detail Page
@@ -60,7 +61,14 @@ AnimeDessert is a web app built by ASP .NET Core 8 MVC with Entity Framework Cor
     - Update Dessert and also change character linking
     - Update Ingredient, Review, Instruction
     - Delete Dessert, Ingredient, Review, Instruction
- 
+
+## Roles and Permissions
+
+- **Admin**: Full access to manage the system
+- **AnimeAdmin**: Create, Update, Delete Anime related data
+- **DessertAdmin**: Create, Update, Delete Dessert related data
+- **User**: All Read features
+
 ## Tech Stack
 
 - ASP .NET Core 8 MVC app
